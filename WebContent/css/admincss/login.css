@@ -1,0 +1,15 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{ background:url("../../images/admin/aa.png") center no-repeat;margin-top:600px;}
+.login{ width:880px; height:400px; position:absolute; left:50%; top:50%; background:url(../images/login_back.jpg) no-repeat;margin: -200px 0px 0px -440px;  }
+.loginform{ width:260px; margin-left:400px; margin-top:150px; font:13px/30px simsun; color:#fff;}
+
+.username{border:solid 2px #ccc;width:250px;height:40px;background:url(../../images/admin/qq.png) no-repeat 0 center;}
+.username input{float:left;border:none;background:none;height:40px;line-height:30px;width:100%; text-indent:32px;}
+.password{border:solid 2px #ccc;width:250px;height:40px;margin-top:20px;background:url(../../images/admin/q.png) no-repeat 0 center;}
+.password input{float:left;border:none;background:none;height:40px;line-height:30px;width:100%; text-indent:32px;}
+.submit{width:50px;height:40px;margin-top:20px;background:url(http://d.lanrentuku.com/down/png/1211/blueberry/user_friend.png) no-repeat 0 center;}
+/* .verifycode{ width:60px; height:20px;} */
+/* .user,.password{ width:160px; height:20px;} */
+/* .user,.password,.verifycode{ background:#eaeaea; border:#006666 1px solid;} */

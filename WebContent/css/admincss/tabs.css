@@ -1,0 +1,8 @@
+﻿.tabs li, .tabs-inner {
+    width: 150px;
+}
+
+.tabs-selected {
+    background-color: #b6ff00;
+}
+

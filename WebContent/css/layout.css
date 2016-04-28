@@ -1,0 +1,33 @@
+body,html{
+	padding:0;
+	margin:0;
+}
+.dropdown-menu .title{
+	width:298px;
+	height:101px;
+	background: url("../images/bg_1.jpg");
+
+}
+.userheadimg{
+	float:left;
+	width: 62px;
+	height: 62px;
+	padding-left:21px;
+	padding-top:22px;
+}
+.userinfo{
+	float:left;
+	width:159px;
+	height:47px;
+	margin-left: 10px;
+	padding-top:18px;
+	color:black;
+}
+
+
+/*底部*/
+.row-fluid{
+	width:100%;
+	padding-bottom: 0px;
+	
+}

@@ -1,0 +1,132 @@
+﻿/* -----------------------------基本框架开始----------------*/
+/*--头样式--设置头的背景图片，高度等*/
+#north {
+    background: url(../images/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%;
+    padding: 10px;
+    overflow: hidden;
+    line-height: 20px;
+    color: #fff;
+    font-family: Verdana, 微软雅黑,黑体;
+}
+
+.topleft {
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+.topleft img{
+    padding:0;
+    margin:0;
+}
+
+.topright {
+    float: right;
+    padding-right: 20px;
+}
+
+    .topright a {
+        color: White;
+        text-decoration: underline;
+    }
+/*--设置导航条宽度*/
+#west {
+    width: 180px;
+}
+/*----------设置菜单样式------------开始-------------*/
+.easyui-accordion1 ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 10px;
+}
+
+    .easyui-accordion1 ul li {
+        padding: 0px;
+    }
+
+        .easyui-accordion1 ul li a {
+            line-height: 24px;
+        }
+
+        .easyui-accordion1 ul li div {
+            margin: 2px 0px;
+            padding-left: 10px;
+            padding-top: 2px;
+        }
+
+            .easyui-accordion1 ul li div.hover {
+                border: 1px dashed #99BBE8;
+                background: #E0ECFF;
+                cursor: pointer;
+            }
+
+                .easyui-accordion1 ul li div.hover a {
+                    color: #416AA3;
+                }
+
+            .easyui-accordion1 ul li div.selected {
+                border: 1px solid #99BBE8;
+                background: #E0ECFF;
+                cursor: default;
+            }
+
+                .easyui-accordion1 ul li div.selected a {
+                    color: #416AA3;
+                    font-weight: bold;
+                }
+
+.nav {
+    padding-left: 18px;
+}
+
+.icon-sys {
+    background: url(../images/directory.png) no-repeat;
+}
+
+.icon {
+    background: url(../images/tabicons.png) no-repeat;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+}
+
+.icon-add {
+    background-position: -19px 0px;
+}
+
+.icon-nav {
+    background-position: -100px -18px;
+}
+
+.icon-users {
+    background-position: -100px -480px;
+}
+
+.icon-role {
+    background-position: -360px -200px;
+}
+
+.icon-set {
+    background-position: -380px -200px;
+}
+
+.icon-log {
+    background-position: -380px -80px;
+}
+
+/*----------设置菜单样式------------结束----------*/
+/*----------------------------------版权   开始---------------------------------------*/
+#south {
+    height: 30px;
+    background-color: #D2E0F2;
+}
+
+.footer {
+    text-align: center;
+    color: #15428B;
+    margin: 0px;
+    padding-top: 5px;
+    line-height: 23px;
+    font-weight: bold;
+}
+/*----------------------------------版权   结束---------------------------------------*/
+/* -----------------------------基本框架结束---------------*/
