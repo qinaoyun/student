@@ -37,7 +37,8 @@ $(".reg-slogan").click(function(){
 alert("ddddddd");
 	alert($(this).attr(class));
 });
-
+</script>
+<script type="text/javascript">  
 $(document).ready(function () {  
     if ($.cookie("rmbUser") == "true") {  
     $("#ck_rmbUser").attr("checked", true);  
@@ -125,7 +126,7 @@ function Save() {
 								<input type="checkbox" id="ck_rmbUser" >
 							</div>
 							<input type="submit" id="js-mobile_btn" href="javascript:;" class="button btn-green" 
-							onclick="return checkit()" value="登录" style="width:100%;"/>
+							onclick="Save()" value="登录" style="width:100%;"/>
 						</div>
 					</div>
 				</div>

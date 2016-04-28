@@ -18,7 +18,7 @@ function window_onload(){
 /*         				alert(result[0].classinfo); */
          score.push(result[i].wsscore);             
 			} 	
-	    alert(score);
+// 	    alert(score);
         
        
 		var myGraph = new RGraph.Line('myCanvas',score);
