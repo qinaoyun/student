@@ -47,8 +47,7 @@ $(function(){
 					    //处理删除
                         if(confirm("确认要删除该文件吗？")){
 //                        	window.location.href="../delete.do?F=teacher&id="+ rows[0].id+"";
-                        	deleteData();}
-                        
+                        	deleteData();}                       
 					}else{
 						$.messager.alert('友情提示','请选择需要删除的选项!','error');
 					}

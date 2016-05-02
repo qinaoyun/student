@@ -53,20 +53,21 @@ public class UserAdminController {
 				User cus=(User)objlist1.get(j);
 				//System.out.println(cus.getPassword());
 				System.out.println(cus.getSno());
-				System.out.println(sno);
-				if(Integer.parseInt(cus.getStatus()) == 0){
-					return "error";
-				}
 				if(cus.getSno().equals(sno) &&buf.toString().equals(cus.getSpasswd())){
 					//context.getSession().put("user", username);
 					request.getSession().setAttribute("user", cus);
 //					model.addAttribute("username", sno);
+					if(Integer.parseInt(cus.getStatus()) == 0){
+						System.out.println(Integer.parseInt(cus.getStatus()));
+						return "error";
+					   
+					}
 					return "admin/Main";
 				}
 		  }
 	        return "error";
 	    }
-	
+	//注销登录
 	@RequestMapping(value = "/adminlogout.do",method = RequestMethod.GET)  
     public String logout(HttpSession httpSession,HttpServletRequest request){  
         httpSession.getAttribute("username"); 
@@ -123,7 +124,7 @@ public class UserAdminController {
 			  return jobj;
 			  
 		  }
-		
+		//添加老师
 		@RequestMapping(value = "/addteacher.do", method = RequestMethod.POST)
 		public String add(HttpServletRequest request,HttpServletResponse response,Teacher tea) throws IOException, NoSuchAlgorithmException {
 			PrintWriter out = response.getWriter();
@@ -151,6 +152,91 @@ public class UserAdminController {
 			tea.setModifydate(new Date());
 			try{
 				entityDao.save(tea);
+				out.print("yes");
+			}catch(Exception e){
+				out.print("no");
+			}			
+			return null;		  
+		  }
+		//添加班委
+		@RequestMapping(value = "/addcommittee.do", method = RequestMethod.POST)
+		public String addcommittee(HttpServletRequest request,HttpServletResponse response,User user) throws IOException, NoSuchAlgorithmException {
+			System.out.println("upload234234");
+			PrintWriter out = response.getWriter();
+			user.setSno(request.getParameter("sno"));
+			user.setSname(request.getParameter("sname"));
+			String password = request.getParameter("spasswd");
+			System.out.println( request.getParameter("sname"));
+			System.out.println(request.getParameter("sno"));
+			System.out.println(request.getParameter("ssex"));
+			user.setSemail(request.getParameter("semail"));
+			user.setScontact(request.getParameter("scontact"));
+			user.setScollege(request.getParameter("scollege"));
+			user.setSclass(request.getParameter("sclass"));
+			user.setSheadimg("/headimg/head_01.png");
+			user.setStatus(Integer.toString(1));
+			user.setSsex(request.getParameter("ssex"));
+			user.setSdesc(request.getParameter("sdesc"));
+			//md5加密
+			MessageDigest md = MessageDigest.getInstance("MD5");  
+	        md.update(password.getBytes());//update处理  
+	        byte [] encryContext = md.digest();//调用该方法完成计算  
+	
+	        int i;  
+	        StringBuffer buf = new StringBuffer("");  
+	        for (int offset = 0; offset < encryContext.length; offset++) {//做相应的转化（十六进制）  
+	            i = encryContext[offset];  
+	            if (i < 0) i += 256;  
+	            if (i < 16) buf.append("0");  
+	            buf.append(Integer.toHexString(i));  
+	        }
+	        user.setSpasswd("123456");
+	        user.setSmodifydate(new Date());
+			try{
+				entityDao.save(user);
+				out.print("yes");
+			}catch(Exception e){
+				out.print("no");
+			}			
+			return null;		  
+		  }
+		
+		//添加班委
+		@RequestMapping(value = "/addstu.do", method = RequestMethod.POST)
+		public String addstu(HttpServletRequest request,HttpServletResponse response,User user) throws IOException, NoSuchAlgorithmException {
+			System.out.println("upload234234");
+			PrintWriter out = response.getWriter();
+			user.setSno(request.getParameter("sno"));
+			user.setSname(request.getParameter("sname"));
+			String password = request.getParameter("spasswd");
+			System.out.println( request.getParameter("sname"));
+			System.out.println(request.getParameter("sno"));
+			System.out.println(request.getParameter("ssex"));
+			user.setSemail(request.getParameter("semail"));
+			user.setScontact(request.getParameter("scontact"));
+			user.setScollege(request.getParameter("scollege"));
+			user.setSclass(request.getParameter("sclass"));
+			user.setSheadimg("/headimg/head_01.png");
+			user.setStatus(Integer.toString(0));
+			user.setSsex(request.getParameter("ssex"));
+			user.setSdesc(request.getParameter("sdesc"));
+			//md5加密
+			MessageDigest md = MessageDigest.getInstance("MD5");  
+	        md.update(password.getBytes());//update处理  
+	        byte [] encryContext = md.digest();//调用该方法完成计算  
+	
+	        int i;  
+	        StringBuffer buf = new StringBuffer("");  
+	        for (int offset = 0; offset < encryContext.length; offset++) {//做相应的转化（十六进制）  
+	            i = encryContext[offset];  
+	            if (i < 0) i += 256;  
+	            if (i < 16) buf.append("0");  
+	            buf.append(Integer.toHexString(i));  
+	        }
+	        user.setSpasswd("123456");
+	        user.setSmodifydate(new Date());
+			try{
+				entityDao.save(user);
 				out.print("yes");
 			}catch(Exception e){
 				out.print("no");
@@ -201,6 +287,7 @@ public class UserAdminController {
 ////			  model.addAttribute("obj", list);
 //			  return jobj;
 		}
+		//修改老师
 		@RequestMapping(value = "/updateteacher.do", method = RequestMethod.POST)
 		public String teacherupdate(HttpServletRequest request,HttpServletResponse response) throws IOException{
 			PrintWriter out = response.getWriter();
@@ -231,31 +318,29 @@ public class UserAdminController {
 			}			  
 			  return null;		  
 		  }
-		@RequestMapping("/stuupdate.do")
-		  public String stuupdate(HttpServletRequest req,User user,ModelMap model){
-			  System.out.println("upload234234");
-			  System.out.println("开始"); 
-			  int ID=user.getID();
-			  String flag=req.getParameter("F");
-			  String sname=user.getSname();
-			  String sno=user.getSno();
-			  String status=user.getStatus();
-			  String semail=user.getSemail();
-			  String scontact=user.getScontact();
-			  String scollege=user.getScollege();
-			  String sclass=user.getSclass();
-			  String sdesc=user.getSdesc(); 
-				  
-				  entityDao.update("update user set sname='"+sname+"',sno='"+sno+"',status='"+status+"',semail='"+semail+
+		//修改学生
+		@RequestMapping(value="/stuupdate.do", method = RequestMethod.POST)
+		  public String stuupdate(HttpServletRequest request,User user,ModelMap model,HttpServletResponse response) throws IOException{
+			PrintWriter out = response.getWriter();
+			    int  ID = Integer.valueOf(request.getParameter("id"));
+				String sname = request.getParameter("sname");
+				System.out.println(sname);
+				String sno = request.getParameter("sno");
+				String semail = request.getParameter("semail");
+				String scontact = request.getParameter("scontact");
+				String scollege= request.getParameter("scollege");
+				String sclass = request.getParameter("sclass");
+				String sdesc= request.getParameter("sdesc");
+				try{
+				  entityDao.update("update user set sname='"+sname+"',sno='"+sno+"',semail='"+semail+
 						  "',scontact='"+scontact+"',scollege='"+scollege+"',sclass='"+sclass+"',"
 						  		+ "sdesc='"+sdesc+"' where ID='"+ID+"'");
-			  if(flag.equals("committee")){
-				  model.addAttribute("flag", "committee");
-			  }else{
-				  model.addAttribute("flag", "stu");  
-			  }
-			  return "admin/success";		  
-		  }
+				        out.print("yes");
+		}catch(Exception e){
+			out.print("no");
+		}			  
+		  return null;		  
+	  }
 		@RequestMapping(value = "/delete.do", method = RequestMethod.GET)
 		  public String deleteObj(HttpServletRequest req,HttpServletResponse response) throws IOException {
 //			System.out.println("asdfasdfasdfasdf");
