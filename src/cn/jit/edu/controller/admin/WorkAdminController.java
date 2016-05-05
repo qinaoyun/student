@@ -91,6 +91,49 @@ public class WorkAdminController {
 		  }
 	}
 	
+	@RequestMapping(value = "/workdelete.do", method = RequestMethod.GET)
+	  public String deleteObj(HttpServletRequest req,HttpServletResponse response) throws IOException {
+//		System.out.println("asdfasdfasdfasdf");
+		 PrintWriter out = response.getWriter();
+		  String id=req.getParameter("id");
+		  String flag=req.getParameter("F");
+		  System.out.println("the flag is:-----------"+flag);
+		  
+		  if(flag.equals("worknotice")){
+			  try{
+				  entityDao.delete("delete from worknotice where ID="+id+"");
+			  }catch(Exception e){
+				  out.print("no");
+			  }			  
+//			  model.addAttribute("flag", "teacher");
+		  }else if(flag.equals("worksubmit")){
+			  try{
+				  entityDao.delete("delete from worksubmit where ID="+id+"");
+			  }catch(Exception e){
+				  out.print("no");
+			  }			  	 
+		  }
+		  else if(flag.equals("tasknotice")){
+			  try{
+				  entityDao.delete("delete from tasknotice where ID="+id+"");
+			  }catch(Exception e){
+				  out.print("no");
+			  }			  
+		  }
+		  else {
+			  try{
+				  entityDao.delete("delete from taskcomplete where ID="+id+"");
+			  }catch(Exception e){
+				  out.print("no");
+			  }			  
+		  }
+		  
+		  out.print("yes");
+		  return null;
+		  
+	  }	
+
+	
 
 class  JsonLists1
 {

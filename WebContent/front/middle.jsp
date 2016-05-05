@@ -21,7 +21,7 @@
                 <a href="<%=request.getContextPath() %>/front/personInfoModify.jsp"><span><i class="icon-post"></i>设置</span></a>
             </li>
             <li class="post-comm">
-                <a href="<%=request.getContextPath() %>/getTimeProcess.do"><span><i class="icon-post"></i>时光机</span></a>
+                <a href="<%=request.getContextPath() %>/getTimeProcessWork.do"><span><i class="icon-post"></i>时光机</span></a>
             </li>
             <li class="post-like">
                 <a href="<%=request.getContextPath() %>/getClassfiles.do"><span><i class="icon-post"></i>库</span></a>

@@ -36,19 +36,25 @@
 		<div class="col-sm-9">
 		<!-- Website Menu -->
 		<div id="topmenu">
-		    <ul class="dropdown clearfix boxed">
-		        <li class="menu-level-0"><a href="<%=request.getContextPath()%>/tasknoticeMain.do"><i class="icon-menu"></i><span>主页</span><sup class="note">3</sup></a></li>
-		        <li class="menu-level-0"><a href="<%=request.getContextPath()%>/front/worknotice.jsp"><i class="icon-menu icon-menu2"></i><span>发布作业</span></a> </li>
-		        <li class="menu-level-0"><a href="<%=request.getContextPath()%>/front/tasknotice.jsp"><i class="icon-menu icon-menu3"></i><span>发布分组</span></a>
-		            <ul class="submenu-1">
-		                <li class="menu-level-1"><a href="#">test1</a></li>
-		                <li class="menu-level-1"><a href="#">test2</a></li>
-		                <li class="menu-level-1"><a href="#">test3</a></li>
-		            </ul>
-		        </li>
-		        <li class="menu-level-0"><a href="#"><i class="icon-menu icon-menu4"></i><span>设置</span></a></li>
-		        <!-- <li class="menu-level-0"><a href="#"><i class="icon-menu icon-menu4"></i><input type="submit" value="search"></a></li> -->
-		    </ul>
+			    <ul class="dropdown clearfix boxed floatle">
+			        <li>
+			            <a href="<%=request.getContextPath()%>/tasknoticeMain.do">
+			                <i class="icon-menu"></i>
+			                <span>主页</span>
+			                <sup class="note">3</sup>
+			            </a>
+			        </li>
+			        <li>
+			            <a href="#">
+			                <i class="icon-menu icon-menu3"></i>
+			                <span>发布</span>
+			            </a>
+			            <ul>
+			                <li><a href="<%=request.getContextPath()%>/querycourse.do">发布作业</a></li>
+			                <li><a href="<%=request.getContextPath()%>/querycourse1.do">发布分组</a></li>
+			            </ul>
+			        </li>
+			    </ul>
 		</div>
 		
 		<!--/ Website Menu -->

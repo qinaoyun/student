@@ -96,6 +96,9 @@ public class UserController {
 		byte[] encryContext = null;
 		StringBuffer buf = null;
 		String pwd = user.getSpasswd();
+		System.out.println(pwd);
+	
+//		Systemm.out.printl
 		String college=user.getScollege();
 		List<Object> collegename = entityDao.createQuery("from collegeinfo where ID='" + college + "'"); 
 		for(int a=0;a< collegename.size();a++){

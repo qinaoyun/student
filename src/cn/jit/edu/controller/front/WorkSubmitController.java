@@ -38,7 +38,7 @@ public class WorkSubmitController{
 			if (!file.isEmpty()) {
 				User user = (User)request.getSession().getAttribute("frontnumber");
 				String Path=user.getSno().substring(0,2);
-				String path = request.getSession().getServletContext().getRealPath(Path+"级");
+				String path = request.getSession().getServletContext().getRealPath("上交作业\\"+Path+"级");
 				String fileName1 = file.getOriginalFilename();
 				String fileName = user.getSno()+user.getSname() + fileName1;
 				 String wnoticeid=request.getParameter("wsworkid");  

@@ -120,7 +120,7 @@ function check(){
 	var passwd1=$("#spasswd").val();
 	var passwd2=$("#spasswd1").val();
 	if(passwd1!=passwd2){
-		$("#passwd1").val("");
+		$("#spasswd1").val("");
 	}
 	
 }
@@ -139,7 +139,7 @@ function saveData(){
 //    	data[field.name] = field.value;
 //      });
 //    alert($("input[name='sname']").val());
-    alert($("input[name='ssex']").val());
+//    alert($("input[name='status']").val());
     $.post(url,{
     	sname:$("input[name='sname']").val(),
     	sno:$("input[name='sno']").val(),
@@ -149,7 +149,8 @@ function saveData(){
     	semail:$("input[name='semail']").val(),
     	scontact:$("input[name='scontact']").val(),
     	sdesc:$("input[name='sdesc']").val(),
-    	ssex:$("input[name='ssex']").val()
+    	ssex:$("input[name='ssex']").val(),
+    	status:$("input[name='status']").val()
     },function (msg) {
         if (msg=="yes") {
 //        	alert("确定吗");
@@ -190,7 +191,7 @@ function viewData(){
 }
 function editData(){
 	var url="../stuupdate.do";
-	alert($("input[name='ID']").val());
+	
 	 $.post(url,{
 		 	id:$("input[name='ID']").val(),
 		 	sname:$("#sname").val(),
@@ -230,7 +231,7 @@ function deleteData(){
         success: function(msg){
         	if(msg=="yes"){
         		$.messager.alert("提示", "删除成功");
-        		deleteCallBack();
+        		$("#dgList").datagrid("reload");
         	}
         	else{
             	 $.messager.alert("提示", "删除失败");

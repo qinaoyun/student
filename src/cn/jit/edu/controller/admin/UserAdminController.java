@@ -168,13 +168,13 @@ public class UserAdminController {
 			String password = request.getParameter("spasswd");
 			System.out.println( request.getParameter("sname"));
 			System.out.println(request.getParameter("sno"));
-			System.out.println(request.getParameter("ssex"));
+			System.out.println(request.getParameter("status"));
 			user.setSemail(request.getParameter("semail"));
 			user.setScontact(request.getParameter("scontact"));
 			user.setScollege(request.getParameter("scollege"));
 			user.setSclass(request.getParameter("sclass"));
 			user.setSheadimg("/headimg/head_01.png");
-			user.setStatus(Integer.toString(1));
+			user.setStatus(request.getParameter("status"));
 			user.setSsex(request.getParameter("ssex"));
 			user.setSdesc(request.getParameter("sdesc"));
 			//md5加密

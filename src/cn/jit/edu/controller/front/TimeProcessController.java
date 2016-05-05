@@ -90,6 +90,100 @@ public class TimeProcessController {
 		return "front/timeProcess";
 	}
 	
+	//作业提交历史记录
+	@RequestMapping(value = "/getTimeProcessWork.do", method = RequestMethod.GET)
+	public String getTimeProcessWork(HttpServletRequest request,HttpServletResponse response, ModelMap model){
+		User user = (User)request.getSession().getAttribute("frontnumber");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");//获取年份工具
+		
+		List<Object> workcompList = entityDao.createQuery("from worksubmit where wsno='"+user.getSno()+"' order by wsuploaddate desc");
+		List<Object> workDiffyearList = new ArrayList();//用于存储作业不同的年份
+		String[] workEachYear = new String[workcompList.size()];//用于一一对应taskcompList中各个数据的年份，方便前台
+		
+		for(int i=0;i<workcompList.size();i++){
+			Date date = ((WorkSubmit)workcompList.get(i)).getWsuploaddate();
+			workEachYear[i] = sdf.format(date);
+			workDiffyearList = setDiffYear(workDiffyearList,sdf.format(date));
+		}
+		
+		model.addAttribute("workEachYear",workEachYear);
+		model.addAttribute("workDiffyearList",workDiffyearList);
+		model.addAttribute("workcompList",workcompList);
+		
+		return "front/timeProcessWork";
+	}
+	
+	//分组提交历史记录
+	@RequestMapping(value = "/getTimeProcessTask.do", method = RequestMethod.GET)
+	public String getTimeProcessTask(HttpServletRequest request,HttpServletResponse response, ModelMap model){
+		User user = (User)request.getSession().getAttribute("frontnumber");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");//获取年份工具
+		
+		List<Object> taskcompList = entityDao.createQuery("from taskcomplete where tcsno='"+user.getSno()+"' order by tccompletedate desc");
+		List<Object> taskDiffyearList = new ArrayList();//用于存储任务不同的年份
+		String[] taskEachYear = new String[taskcompList.size()];//用于一一对应taskcompList中各个数据的年份，方便前台
+		
+		for(int i=0;i<taskcompList.size();i++){
+			Date date = ((TaskComplete)taskcompList.get(i)).getTccompletedate();
+			taskEachYear[i] = sdf.format(date);
+			taskDiffyearList = setDiffYear(taskDiffyearList,sdf.format(date));
+//			System.out.println(sdf.format(date));
+		}
+		
+		model.addAttribute("taskEachYear",taskEachYear);
+		model.addAttribute("taskDiffyearList",taskDiffyearList);
+		model.addAttribute("taskcompList",taskcompList);
+		
+		return "front/timeProcessTask"; 
+	}
+	
+	//作业发布历史记录
+	@RequestMapping(value = "/getTimeProcessWorknotice.do", method = RequestMethod.GET)
+	public String getTimeProcessWorknotice(HttpServletRequest request,HttpServletResponse response, ModelMap model){
+		User user = (User)request.getSession().getAttribute("frontnumber");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");//获取年份工具
+		
+		List<Object> worknoticeList = entityDao.createQuery("from worknotice where wreleasesno='"+user.getSno()+"' order by wreleasedate desc");
+		List<Object> worknoticeDiffyearList = new ArrayList();//用于作业发布不同的年份
+		String[] worknoticeEachYear = new String[worknoticeList.size()];//用于一一对应worknoticeList中各个数据的年份，方便前台
+		
+		for(int i=0;i<worknoticeList.size();i++){
+			Date date = ((WorkNotice)worknoticeList.get(i)).getWreleasedate();
+			worknoticeEachYear[i] = sdf.format(date);
+			worknoticeDiffyearList = setDiffYear(worknoticeDiffyearList,sdf.format(date));
+		}
+		
+		model.addAttribute("worknoticeEachYear",worknoticeEachYear);
+		model.addAttribute("worknoticeDiffyearList",worknoticeDiffyearList);
+		model.addAttribute("worknoticeList",worknoticeList);
+		
+		return "front/timeProcessWorknotice";
+	}
+	
+	//分组发布历史记录
+	@RequestMapping(value = "/getTimeProcessTasknotice.do", method = RequestMethod.GET)
+	public String getTimeProcessTasknotice(HttpServletRequest request,HttpServletResponse response, ModelMap model){
+		User user = (User)request.getSession().getAttribute("frontnumber");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");//获取年份工具
+		
+		List<Object> tasknoticeList = entityDao.createQuery("from tasknotice where treleasesno='"+user.getSno()+"' order by treleasedate desc");
+		List<Object> tasknoticeDiffyearList = new ArrayList();//用于作业发布不同的年份
+		String[] tasknoticeEachYear = new String[tasknoticeList.size()];//用于一一对应tasknoticeList中各个数据的年份，方便前台
+		
+		for(int i=0;i<tasknoticeList.size();i++){
+			Date date = ((TaskNotice)tasknoticeList.get(i)).getTreleasedate();
+			tasknoticeEachYear[i] = sdf.format(date);
+			tasknoticeDiffyearList = setDiffYear(tasknoticeDiffyearList,sdf.format(date));
+		}
+		
+		model.addAttribute("tasknoticeEachYear",tasknoticeEachYear);
+		model.addAttribute("tasknoticeDiffyearList",tasknoticeDiffyearList);
+		model.addAttribute("tasknoticeList",tasknoticeList);
+		
+		return "front/timeProcessTasknotice";
+	}
+	
+	
 	@RequestMapping(value = "/downloadFile.do", method = RequestMethod.GET)
 	public String downloadFile(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws Exception{
 		User user = (User)request.getSession().getAttribute("frontnumber");

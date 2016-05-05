@@ -52,6 +52,21 @@ $(function(){
 			    }
 			},
 			'-',{
+			    iconCls: 'icon-remove',
+			    text: '删除',
+			    handler: function () {
+					var rows = $('#dgList').datagrid('getSelections');
+					if (rows.length > 0) {
+					    //处理删除
+                        if(confirm("确认要删除该文件吗？")){
+//                        	window.location.href="../delete.do?F=teacher&id="+ rows[0].id+"";
+                        	deleteData();}                       
+					}else{
+						$.messager.alert('友情提示','请选择需要删除的选项!','error');
+					}
+			    }
+			},
+			'-',{
 			    iconCls: 'icon-reload',
 			    text: '刷新',
 			    handler: function () {
@@ -91,6 +106,27 @@ function viewData(){
         	}
         }
 	});	
+}
+function deleteData(){
+//	alert("adsfasdfa");
+    var data = $('#dgList').datagrid("getSelections");
+    //删除 
+    //发送删除请求
+    
+    $.ajax({
+        type: "GET",
+        dataType:'text',
+        url: "../workdelete.do?F=taskcomplete&id="+data[0].id,
+        success: function(msg){
+        	if(msg=="yes"){
+        		$.messager.alert("提示", "删除成功");
+        		deleteCallBack();
+        	}
+        	else{
+            	 $.messager.alert("提示", "删除失败");
+        	}
+        }
+    });
 }
 
 

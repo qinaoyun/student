@@ -45,10 +45,16 @@
        		<th><label>联系方式：</label></th>
        		<td><input name="teacontact" class="easyui-vlidatebox" /></td>
        	</tr>
-       	<tr>
-       		<th><label>学院：</label></th>
-       		<td><input name="teacollege" class="easyui-vlidatebox" /></td>
-       	</tr>
+        <tr>
+                    <td>学院</td>
+                    <td><select name="scollege" id="scollege"class="easyui-vlidatebox" >
+                    <c:forEach var="college"  items="${obj}">
+                                   <option value="${college.ID}" id="scollegeid">${college.collogeinfo}</option>
+<!--                                     <input type="hidden" id="scollegeid" value="" />  -->
+                     </c:forEach>
+                    </select>
+</td>
+                </tr>
        </table>
 <!--        <input type="hidden" name="ID" /> -->
        </form>

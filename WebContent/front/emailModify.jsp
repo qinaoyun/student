@@ -31,7 +31,7 @@
 				<!-- header -->
 
 				<div id="topmenu">
-    			<ul class="dropdown clearfix boxed ">
+    			<ul class="dropdown clearfix boxed floatle">
 			        <li>
 			            <a href="<%=request.getContextPath()%>/tasknoticeMain.do">
 			                <i class="icon-menu"></i>
@@ -40,29 +40,17 @@
 			            </a>
 			        </li>
 			        <li>
-			            <a href="<%=request.getContextPath()%>/front/worknotice.jsp">
-			                <i class="icon-menu icon-menu2"></i>
-			                <span>发布作业</span>
-			            </a>
-			        </li>
-			        <li>
-			            <a href="<%=request.getContextPath()%>/front/tasknotice.jsp">
+			            <a href="#">
 			                <i class="icon-menu icon-menu3"></i>
-			                <span>发布分组</span>
+			                <span>发布</span>
 			            </a>
 			            <ul>
-			                <li><a href="#">Web design</a></li>
-			                <li><a href="#">User interface</a></li>
-			                <li><a href="#">Social media</a></li>
+			                <li><a href="<%=request.getContextPath()%>/querycourse.do">发布作业</a></li>
+			                <li><a href="<%=request.getContextPath()%>/querycourse1.do">发布分组</a></li>
 			            </ul>
 			        </li>
-			        <li>
-			            <a href="#">
-			                <i class="icon-menu icon-menu4"></i>
-			                <span>设置</span>
-			            </a>
-			        </li>
-    			</ul>
+			    </ul>
+
 				</div>
 				<!-- header -->
 	

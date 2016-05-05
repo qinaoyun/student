@@ -25,6 +25,14 @@
        		<th><label>姓名：</label></th>
        		<td><input name="sname" class="easyui-validatebox" required="true" /></td>
        	</tr>
+       		<tr>
+       	     <th><label>性别：</label></th>
+       	      <td><input name="ssex" type="radio" id="sex-1" value="1" class="easyui-validatebox"
+                               data-message="请选择一个性别" data-easytip="class:easy-blue;"><label class="radio-label" for="sex-1">男</label>
+                        <input name="ssex" type="radio" id="sex-2" value="0" class="easyui-validatebox">
+                        <label class="radio-label" for="sex-2">女</label>
+                        </td>
+       	</tr>
        	<tr>
        		<th><label>学号：</label></th>
        		<td><input name="sno" class="easyui-validatebox" required="true" /></td>
@@ -37,22 +45,26 @@
        		<th><label>确认密码:</label></th>
        		<td><input id="spasswd1" name="spasswd1" type="password" class="easyui-validatebox" required="true" onChange="check();" /></td>
        	</tr>
+       	
+       	<tr>
+       	     <th><label>身份：</label></th>
+       	      <td><input name="status" type="radio" id="status-1" value="1" class="easyui-validatebox"
+                               data-message="请选择一个身份" data-easytip="class:easy-blue;"><label class="radio-label" for="status-1">学委</label>
+                        <input name="status" type="radio" id="status-2" value="2" class="easyui-validatebox">
+                        <label class="radio-label" for="status-2">班长</label>
+                        </td>
+       	</tr>
        		<tr>
        		<th><label>班级：</label></th>
        		<td><input name="sclass" class="easyui-validatebox" required="true" /></td>
        	</tr>
        	<tr>
        		<th><label>学院：</label></th>
-       		<td><input name="scollege" class="easyui-vlidatebox" required="true" /></td>
+       		<td><input name="scollege"  type="text" class="easyui-vlidatebox" required="true" /></td>
        	</tr>
-       	       	<tr>
-       	     <th><label>性别：</label></th>
-       	      <td><input name="ssex" type="radio" id="sex-1" value="1" class="easyui-validatebox"
-                               data-message="请选择一个性别" data-easytip="class:easy-blue;"><label class="radio-label" for="sex-1">男</label>
-                        <input name="ssex" type="radio" id="sex-2" value="0" class="easyui-validatebox">
-                        <label class="radio-label" for="sex-2">女</label>
-                        </td>
-       	</tr>
+       	       
+       	
+       		
        
        	<tr>
        		<th><label>邮箱：</label></th>
@@ -60,22 +72,23 @@
        	</tr>
        	<tr>
        		<th><label>联系方式：</label></th>
-       		<td><input name="scontact" class="easyui-vlidatebox" required="true" /></td>
+       		<td><input name="scontact"  type="text"  class="easyui-vlidatebox" required="true" /></td>
        	</tr>
        
        	<tr>
        		<th><label>个性签名：</label></th>
-       		<td><input name="sdesc" class="easyui-vlidatebox" required="true" /></td>
+       		<td><input name="sdesc" type="text"  class="easyui-vlidatebox" required="true" /></td>
        	</tr>
        </table>
 <!--        <input type="hidden" name="ID" /> -->
-       </form>
+      
   </div>
   <div id="dlg-buttons">
           <a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveData();" iconcls="icon-save">保存</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#add').dialog('close')"
             iconcls="icon-cancel">取消</a>
     </div>
+     </form>
  <div id="view" title="查看班级干部信息" class="easyui-dialog" style="width: 400px; height: 280px; padding: 10px 20px;"
        closed="true" data-options="iconCls: 'icon-view',buttons: '#dlg-buttons2'">
        <form id="fm" method="post">

@@ -28,38 +28,25 @@
 	<!-- header -->
 
 	<div id="topmenu">
-    <ul class="dropdown clearfix boxed floatle">
-        <li>
-            <a href="<%=request.getContextPath()%>/tasknoticeMain.do">
-                <i class="icon-menu"></i>
-                <span>主页</span>
-                <sup class="note">3</sup>
-            </a>
-        </li>
-        <li>
-            <a href="<%=request.getContextPath()%>/front/worknotice.jsp">
-                <i class="icon-menu icon-menu2"></i>
-                <span>发布作业</span>
-            </a>
-        </li>
-        <li>
-            <a href="<%=request.getContextPath()%>/front/tasknotice.jsp">
-                <i class="icon-menu icon-menu3"></i>
-                <span>发布分组</span>
-            </a>
-            <ul>
-                <li><a href="#">test1</a></li>
-                <li><a href="#">test2</a></li>
-                <li><a href="#">test3</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">
-                <i class="icon-menu icon-menu4"></i>
-                <span>设置</span>
-            </a>
-        </li>
-    </ul>
+    			    <ul class="dropdown clearfix boxed floatle">
+			        <li>
+			            <a href="<%=request.getContextPath()%>/tasknoticeMain.do">
+			                <i class="icon-menu"></i>
+			                <span>主页</span>
+			                <sup class="note">3</sup>
+			            </a>
+			        </li>
+			        <li>
+			            <a href="#">
+			                <i class="icon-menu icon-menu3"></i>
+			                <span>发布</span>
+			            </a>
+			            <ul>
+			                <li><a href="<%=request.getContextPath()%>/querycourse.do">发布作业</a></li>
+			                <li><a href="<%=request.getContextPath()%>/querycourse1.do">发布分组</a></li>
+			            </ul>
+			        </li>
+			    </ul>
 </div>
 	<!-- header -->
 	
@@ -205,11 +192,11 @@
                 
 
                 <div class="col-sm-2 col-sm-offset-3">
-                    <span class="btn marbot"><input type="submit" value="修改" id="personInfoModify"  /></span>
+                    <span class="btn marbot"><input type="button" value="修改" id="personInfoModify"  /></span>
                 </div>
 
                 <div class="col-sm-2 col-sm-offset-1">
-                   	<span class="btn marbot"><input type="submit" value="提交" id="submit1" disabled="disabled"/></span>
+                   	<span class="btn marbot"><input type="button" value="提交" id="submit1" disabled="disabled"/></span>
                 </div>
 
 		</div>
