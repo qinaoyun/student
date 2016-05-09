@@ -72,7 +72,7 @@ function viewData(){
 	$.ajax({
         type: "GET",
         dataType:'json',
-        url: "../viewwork.do?id="+data[0].id+"&S=worksubmit",
+        url: "../viewwork.do?id="+data[0].id+"&S=worknotice",
         success: function(msg){
         	
         	for ( var i = 0; i < msg.length; i++) {

@@ -104,11 +104,11 @@ function window_onload(){
 						<div class="col-sm-12">
 							<!-- form -->
 							<div class="container ">
-								<div class="jumbotron lememale ">
-									<h3>欢迎登陆页面！</h3>
+								<div class="jumbotron lememale ">									
                                      	<c:forEach items="${worknotice}" var="worknotice">
+                                     	<h3>${worknotice.wname}<p class="text-right">任课老师：${worknotice.wcourseteacher}</p></h3>
 											<small>${worknotice.wcoursedesc}</small>
-                                			<p class="text-right">${worknotice.wreleasedate}</p>
+                                			<p class="text-right">发布日期：${worknotice.wreleasedate}</p>
 										</c:forEach>
 									<div class="row boxed">
 										<!-- 提交作业的表单 -->
@@ -174,7 +174,7 @@ function window_onload(){
                                        <input type="hidden" id="flag"value="${flag}" />
 
 										<div class="form-group">
-											<div class="field_text field_textarea col-sm-setoff-1 col-sm-10" style="width: 100%; height: 600px; overflow: scroll; padding-left: 10px;">
+											<div class="field_text field_textarea col-sm-setoff-1 col-sm-10" style="width: 100%; height: auto;padding-left: 10px;">
 												<!-- 显示留言的内容 -->
 												<c:forEach items="${msg}" var="msg">
 													<ol>

@@ -8,13 +8,22 @@
     </div>
     <div class="inner clearfix">
         <div class="avatar">
-            <img src="<%=request.getContextPath()%>${frontnumber.sheadimg}" alt="" />
+            <img src="<%=request.getContextPath()%>${frontnumber.sheadimg}" alt="" />         
         </div>
-        <h5>${frontnumber.sname}</h5>
+       <div style="margin-top:20px">
+        ${frontnumber.sdesc}
+       </div>
+ <h4>${frontnumber.sname}<a href="<%=request.getContextPath()%>/logout.do" id="loginOut">退出</a></h4>
         <span class="subtitle">
-            ${frontnumber.sdesc}
-        </span>
+      <h6>${frontnumber.scollege}</h6>
+       </span>
+        <span class="subtitle">
+      <h6>${frontnumber.sclass}</h6>
+         </span>
+          
+           
     </div>
+         
     <div class="post-meta-links">
         <ul class="clearfix">
             <li class="post-view">

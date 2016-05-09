@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
 import cn.jit.edu.util.LogonUtils;
+import cn.jit.edu.util.MD5Util;
 
 @Controller
 public class UserController {
@@ -24,7 +25,7 @@ public class UserController {
 	@Autowired
 	private EntityDao entityDao;
 	
-	
+	//登录
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String testLogin(@RequestParam(value = "number") String number,String password, HttpServletRequest request,HttpServletResponse response, ModelMap model)
 			throws NoSuchAlgorithmException, UnsupportedEncodingException {
@@ -88,38 +89,30 @@ public class UserController {
 
 		return "front/error";
 	}
+	
+	//退出登录
+
+    @RequestMapping(value = "/logout.do",method = RequestMethod.GET)  
+	    public String logout(HttpSession httpSession,HttpServletRequest request){  
+	        httpSession.getAttribute("frontnumber"); 
+	        request.getSession().setAttribute("frontnumber", null);
+	        return "index";  
+	    }
 //   注册
 	@RequestMapping(value = "/register.do", method = RequestMethod.POST)
-	public String register(User user) throws NoSuchAlgorithmException {
-		int i;
-		MessageDigest md = null;
-		byte[] encryContext = null;
-		StringBuffer buf = null;
+	public String register(User user) throws Exception {
 		String pwd = user.getSpasswd();
 		System.out.println(pwd);
-	
-//		Systemm.out.printl
+		System.out.println(user.getSname());
+		
 		String college=user.getScollege();
 		List<Object> collegename = entityDao.createQuery("from collegeinfo where ID='" + college + "'"); 
 		for(int a=0;a< collegename.size();a++){
 			Collegeinfo  mmsg=(Collegeinfo) collegename .get(a);
 			  user.setScollege(mmsg.getCollogeinfo());
 		  }
-		
-		md = MessageDigest.getInstance("MD5");
-		md.update(pwd.getBytes());
-		encryContext = md.digest();
-
-		buf = new StringBuffer("");
-		for (int offset = 0; offset < encryContext.length; offset++) {
-			i = encryContext[offset];
-			if (i < 0)
-				i += 256;
-			if (i < 16)
-				buf.append("0");
-			buf.append(Integer.toHexString(i));
-		}
-		user.setSpasswd(buf.toString());
+		user.setSpasswd(MD5Util.md5Encode(pwd));
+		System.out.println(MD5Util.md5Encode(pwd));
 		user.setSmodifydate(new Date());
 		user.setSheadimg("/headimg/head_01.png");
 		user.setStatus(Integer.toString(0));
@@ -270,15 +263,13 @@ public class UserController {
 		//从数据库拉取main界面的主要信息
 		public void toMain(ModelMap model,User user){
 //			User user = (User)request.getSession().getAttribute("frontnumber");
-			List<Object> worklist=entityDao.createQuery("from worknotice where wclass='"+user.getSclass()+"' order by wmodifydate desc");
+			List<Object> worklist=entityDao.createQuery("from worknotice where wclass='"+user.getSclass()+"' order by wuploaddate desc");
 			model.addAttribute("obj", worklist);
+			model.addAttribute("listsize",worklist.size());
 			List<Object> tasklist = entityDao.createQuery("from tasknotice where tclass='"+user.getSclass()+"' order by tmodifydate desc");
 			model.addAttribute("tasklist",tasklist);
 //			查找离上交日期最近的四条数据  SELECT TOP 2 * FROM table_name ORDER BY datetime desc
 			
-			List<Object> wnoticelist = entityDao.createQuery("from worknotice where wclass='"+user.getSclass()+"' order by wuploaddate desc");
-			model.addAttribute("wnoticelist",wnoticelist);
-//		    查找到这四条数据后，与当前进行比较
 			
 			
 			List<Object> numtasklist = new ArrayList();//用于存储每个分组已选人数的集合

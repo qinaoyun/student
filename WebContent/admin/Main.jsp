@@ -39,7 +39,7 @@
     <form id="form1" >
         <div data-options="region:'north',border:false" id="north">
             <span class="topright">
-                欢迎<span class="lgUser">您,${user.sname}&nbsp; </span><a href="#" id="editpass">修改密码</a> <a href="./logout.do" id="loginOut">安全退出</a></span>
+                欢迎<span class="lgUser">您,${user.status}：${user.sname}&nbsp; </span><a href="#" id="editpass">修改密码</a> <a href="./adminlogout.do" id="loginOut">安全退出</a></span>
             <span class="topleft">学生作业系统</span>
         </div>
         <div id="west" data-options="region:'west',split:true,title:'导航菜单'">

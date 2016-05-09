@@ -114,7 +114,7 @@
 				       </table>
 				       <input type="hidden" name="ID" />
 				      
-        			   <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#edit').dialog('close')"
+        			   <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#view').dialog('close')"
             			iconcls="icon-cancel">取消</a>
 				   </form>
                 </div>

@@ -30,9 +30,10 @@ public class WorkAdminController {
 	private EntityDao entityDao;
 	
 	//列出用户表的所有数据	
-	@RequestMapping("/listwork.do")
+	@RequestMapping("/listwork.do")	      
 		  public @ResponseBody   JsonLists1 list(HttpServletRequest req) {
 			  System.out.println("coming .........!");
+			  User user = (User)req.getSession().getAttribute("user");
 			  String page=req.getParameter("page");
 			  String rows=req.getParameter("rows");
 			  System.out.println("coming .........!"+page+"  "+rows);
@@ -42,19 +43,19 @@ public class WorkAdminController {
 			  List<Object> objlist=null;
 			  List<Object>  count=null;
 			  if(flag.equals("worknotice")){
-				  objlist=entityDao.findPage("from worknotice order by wmodifydate desc", page, rows);  			 
-				  count=entityDao.createQuery("from worknotice");
+				  objlist=entityDao.findPage("from worknotice where wclass='" +user.getSclass()+ "'order by wmodifydate desc", page, rows);  			 
+				  count=entityDao.createQuery("from worknotice where wclass='" +user.getSclass()+ "'");
 			  }else if(flag.equals("worksubmit")){
-				  objlist=entityDao.findPage("from worksubmit  order by wsmodifydate desc", page, rows);  				  
-				  count=entityDao.createQuery("from worksubmit");
+				  objlist=entityDao.findPage("from worksubmit  where wsclass='" +user.getSclass()+ "'order by wsmodifydate desc", page, rows);  				  
+				  count=entityDao.createQuery("from worksubmit where wsclass='" +user.getSclass()+ "'");
 			  }
 			  else if(flag.equals("tasknotice")){
-				  objlist=entityDao.findPage("from tasknotice order by tmodifydate desc", page, rows);  				  
-				  count=entityDao.createQuery("from tasknotice");
+				  objlist=entityDao.findPage("from tasknotice where tclass='" +user.getSclass()+ "'order by tmodifydate desc", page, rows);  				  
+				  count=entityDao.createQuery("from tasknotice where tclass='" +user.getSclass()+ "'");
 			  }
 			  else{
-				  objlist=entityDao.findPage("from taskcomplete order by tccompletedate desc", page, rows);  	
-				  count=entityDao.createQuery("from taskcomplete ");
+				  objlist=entityDao.findPage("from taskcomplete where tcclass='" +user.getSclass()+ "'order by tccompletedate desc", page, rows);  	
+				  count=entityDao.createQuery("from taskcomplete where tcclass='" +user.getSclass()+ "'");
 			  }
 			  
 			   jobj.setTotal(count.size());

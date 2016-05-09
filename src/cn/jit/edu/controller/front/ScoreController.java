@@ -35,7 +35,7 @@ public class ScoreController {
 	@ResponseBody
  	List<Object> queryscore(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws IOException {
 		User user = (User)request.getSession().getAttribute("frontnumber");
-		List<Object> worksubmit = entityDao.createQuery("from worksubmit where wsno='" + user.getSno()+ "'");
+		List<Object> worksubmit = entityDao.createQuery("from worksubmit where wsscore !=null and wsno='" + user.getSno()+ "'");
 	return worksubmit;
 }     
 	//作业分析图查询所有作业
@@ -52,7 +52,7 @@ public class ScoreController {
  	List<Object> querysscore(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws IOException {
 	String wscorename= request.getParameter("wscorename");
 	User user = (User)request.getSession().getAttribute("frontnumber");
-	List<Object> wsubmit = entityDao.createQuery("from worksubmit where wsname='" + wscorename+ "'"+"and wsno='"+ user.getSno()+ "'");
+	List<Object> wsubmit = entityDao.createQuery("from worksubmit where wsscore !=null and wsname='" + wscorename+ "'"+"and wsno='"+ user.getSno()+ "'");
 	return wsubmit;
 }     
 	 

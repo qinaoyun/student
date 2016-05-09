@@ -1,4 +1,5 @@
 $(function(){
+   if($("#hidstatus").val()=="老师"){
   $('#dgList').datagrid({
         url: '../list.do?T=committee&_r='+Math.random(),
         fit: true,
@@ -114,7 +115,66 @@ $(function(){
 		 ]
 		
     });
-  
+   }
+   else {
+	   $('#dgList').datagrid({
+	        url: '../list.do?T=committee&_r='+Math.random(),
+	        fit: true,
+	        fitColumns: true,
+	        idField: 'id',
+	        loadMsg: '正在加载系统功能...',
+	        pagination: true,
+	        singleSelect: true, 
+	        pageSize: 10,
+	        pageNumber: 1,
+	        checkOnSelect:false,
+	        pageList: [1,10, 20, 30],
+	        rownumbers: true,
+	        queryParams: '',//表格初始化往后台发送异步请求后台的json数据时候额外发送的请求参数。
+	        columns: [[
+			    { field: 'ck', checkbox: true, align: 'left', width: 50 },
+		    	{ field: 'id', title: '文件ID', width: 40, hidden: true },
+	            { field: 'sname', title: '姓名', width: 40, hidden: false },
+		    	{ field: 'sno', title: '学号', width: 40 },
+				{ field: 'status', title: '身份', width: 40 },
+				{ field: 'sclass', title: '班级', width: 40 },
+				{ field: 'scollege', title: '学院', width: 40 },
+//				{ field: 'sclass', title: '', width: 40 },
+				{ field: 'smodifydate', title: '注册日期', width: 50,formatter:function(value,row,index){  
+	                var unixTimestamp = new Date(value);  
+	                return unixTimestamp.toLocaleString();  
+	                } }
+				
+	        ]],
+	        toolbar: [
+	              {
+					 iconCls: 'icon-view',
+					    text: '查看',
+					    handler: function () {
+							var rows = $('#dgList').datagrid('getSelections');
+							if (rows.length > 0){
+								$("#view").dialog("open");
+								viewData();
+							    	
+							}else{
+								$.messager.alert('友情提示','请选择需要查看的选项!','error');
+							}
+					    }
+					},
+				     '-',{
+				    iconCls: 'icon-reload',
+				    text: '刷新',
+				    handler: function () {
+				    	$("#dgList").datagrid("reload");
+		
+						
+						
+				    }
+				}
+			 ]
+			
+	    });
+   }
 });
 function check(){
 	var passwd1=$("#spasswd").val();

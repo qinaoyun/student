@@ -41,7 +41,7 @@ public class CourseController {
 		@ResponseBody
      	List<Object> list(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws IOException {
 			String courseid= request.getParameter("courseid");
-			List<Object> tea = entityDao.createQuery("from course where college='" + courseid+ "'");
+			List<Object> tea = entityDao.createQuery("from course where ID='" + courseid+ "'");
 //			PrintWriter out = response.getWriter();
 //			out.print(collegeid);
 			return tea;

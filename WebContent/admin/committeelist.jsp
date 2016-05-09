@@ -22,6 +22,7 @@
        <form id="fm" method="post">
        <table id="tblAdd1" class="view">
        <tr>
+       <input type="hidden" value="${user.status}" id="hidstatus"> 
        		<th><label>姓名：</label></th>
        		<td><input name="sname" class="easyui-validatebox" required="true" /></td>
        	</tr>
@@ -127,7 +128,7 @@
 				       </table>
 				       <input type="hidden" name="ID" />
 				      
-        			   <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#edit').dialog('close')"
+        			   <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#view').dialog('close')"
             			iconcls="icon-cancel">取消</a>
 				   </form>
                 </div>

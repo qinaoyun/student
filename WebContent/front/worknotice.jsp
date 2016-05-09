@@ -94,8 +94,6 @@
     <!-- 根据学院查询班级 --> 
             <script type="text/javascript">
             $("#wcoursename").blur(function(){
-//             	alert($("#scourse").val());
-                
         		$.post("<%=request.getContextPath() %>/queryteaname.do",{
         			courseid : $("#wcoursename").val(),
         			data:"test"	
@@ -103,8 +101,7 @@
         		function(data,status){
         			var result = data; 
 //         			$("#sclass").empty();
-        			for ( var i = 0; i < result.length; i++) {
-/*         				alert(result[0].classinfo); */       				
+        			for ( var i = 0; i < result.length; i++) {				
         				$("#wcourseteacher").val(result[i].teaname); 
         				$("#wcoursenum").val(result[i].courseno); 
         			} 		

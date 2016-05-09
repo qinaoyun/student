@@ -22,6 +22,7 @@
        <form id="fm" method="post">
        <table id="tblAdd1" class="view">
        	<tr>
+       		<input type="hidden" value="${user.status}" id="hidstatus"> 
        		<th><label>工号：</label></th>
        		<td><input name="teano" class="easyui-validatebox" required="true" /></td>
        	</tr>

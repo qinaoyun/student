@@ -57,7 +57,7 @@
 			    </ul>
 </div>
 <!-- <div  class="col-sm-12" style="text-align:center;"> -->
-<tr>z
+<tr>
                     <td ><h3>请选择要查询的作业</h3></td>
                     <td><select name="sscore" id="sscore">
                    <c:forEach var="wscore"  items="${obj}">
@@ -67,14 +67,17 @@
                     </select>
                      </td>
                 </tr>
-                <input id='query' type=button value="查询成绩" >
+                <input id='query' type=button value="开始分析" >
 <!--   </div> -->
 <!--  根据作业名称查询数据    -->
 <script type="text/javascript">
    function window_onload(){
-      var score=new Array();  
+      var score=new Array(); 
+      $("#scorediv").hide();
+      $("#scorediv1").hide();
     $("#query").click(function(){
-            	alert($("#sscore").val());
+    	$("#scorediv").show();
+        $("#scorediv1").show();
             	var score=new Array();
             	var score1=new Array();
             	var score2=new Array();
@@ -123,7 +126,7 @@
           		  myGraph.Set('chart.background.grid', false);
           		    //指定标签文字的绘制空间
           		    myGraph.Set('chart.gutter', 60); 
-          		  myGraph.Set('chart.colors', ['white']);
+          		  myGraph.Set('chart.colors', ['blue']);
           		  myGraph.Set('chart.linewidth', 5);
           	        //指定在折线连接点处绘制说明销售数量的文字
          		     myGraph.Set('chart.labels.above', true); 
@@ -289,16 +292,16 @@
 </div>
  
 <div class="container col-sm-offset-3 col-sm-4" >
-<div style="width:400px;height:300px;">
-           <canvas id="myCanvas" width="400"  height="300" style="cursor: default;margin-left:-50px;margin-top:-30px;">
+<div id="scorediv"style="background-color:white;width:400px;height:300px;">
+           <canvas id="myCanvas" width="400"  height="300" style="cursor: default;margin-left:-5px;margin-top:-10px;">
                      [您的浏览器不支持canvas元素]
            </canvas>
 </div>
 </div>
 
 <div class="container col-sm-offset-3 col-sm-4" >
-<div style="width:400px;height:300px;">
- <canvas id="myCanvas1" width="400"  height="300" style="cursor: default;margin-left:-50px;margin-top:-30px;">
+<div id="scorediv1"style="background-color:white;width:400px;height:300px;">
+ <canvas id="myCanvas1" width="400"  height="300" style="cursor: default;margin-left:-5px;margin-top:-10px;">
                      [您的浏览器不支持canvas元素]
            </canvas>
 </div>

@@ -22,6 +22,12 @@
 
     <script src="<%=request.getContextPath()%>/module/js/jquery-2.1.0.min.js"></script>
     <script src="<%=request.getContextPath()%>/module/js/easyform/easyform.js"></script>
+<script type="text/javascript">
+       $(document).ready(function(){   	  
+    	   $("#scollege").val("--请选择学院--");
+    	   $("#form2").form("clear");
+       });
+</script>
 </head>
 <body>
 <form id="form2" action="register.do" method="post">
@@ -37,7 +43,7 @@
     </div>
 
     <div class="form-div">
-        <form id="reg-form" action="" method="post">
+<!--         <form id="reg-form" action="" method="post"> -->
 
             <table>
                 <tr>
@@ -177,7 +183,7 @@
             </div>
 
             <br class="clear">
-        </form>
+
     </div>
 
     <!--简介-->

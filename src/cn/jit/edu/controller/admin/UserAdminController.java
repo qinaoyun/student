@@ -55,10 +55,24 @@ public class UserAdminController {
 				System.out.println(cus.getSno());
 				if(cus.getSno().equals(sno) &&buf.toString().equals(cus.getSpasswd())){
 					//context.getSession().put("user", username);
+					
+					switch(Integer.parseInt(cus.getStatus())){
+					case 0:
+						cus.setStatus("普通学生");
+						break;
+					case 1:
+						cus.setStatus("学委");
+						break;
+					case 2:
+						cus.setStatus("班长");
+						break;
+					case 3:
+						cus.setStatus("老师");
+						break;
+				}
 					request.getSession().setAttribute("user", cus);
 //					model.addAttribute("username", sno);
-					if(Integer.parseInt(cus.getStatus()) == 0){
-						System.out.println(Integer.parseInt(cus.getStatus()));
+					if(cus.getStatus() == "普通学生"){
 						return "error";
 					   
 					}
@@ -79,6 +93,7 @@ public class UserAdminController {
 	@RequestMapping("/list.do")
 		  public @ResponseBody   JsonLists list(HttpServletRequest req) {
 			  System.out.println("coming .........!");
+			  User user = (User)req.getSession().getAttribute("user");
 			  String page=req.getParameter("page");
 			  String rows=req.getParameter("rows");
 			  System.out.println("coming .........!"+page+"  "+rows);
@@ -91,7 +106,7 @@ public class UserAdminController {
 				  objlist=entityDao.findPage("from teacher order by modifydate desc", page, rows);  			 
 				  count=entityDao.createQuery("from teacher");
 			  }else if(flag.equals("stu")){
-				  objlist=entityDao.findPage("from user where status='0' order by smodifydate desc", page, rows);  
+				  objlist=entityDao.findPage("from user where status='0' and sclass='" +user.getSclass()+ "' order by smodifydate desc", page, rows);  
 				  for(int j=0;j<objlist.size();j++){
 						User cus=(User)objlist.get(j);
 						switch(Integer.parseInt(cus.getStatus())){
@@ -100,7 +115,7 @@ public class UserAdminController {
 							break;		
 					}						
 				  }
-				  count=entityDao.createQuery("from user where status='0'");
+				  count=entityDao.createQuery("from user where status='0' and sclass='" +user.getSclass()+ "'");
 			  }
 			  else{
 				  objlist=entityDao.findPage("from user where status='1' or status='2' order by smodifydate desc", page, rows);  
