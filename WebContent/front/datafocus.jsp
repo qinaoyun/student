@@ -69,11 +69,8 @@
         			<input type="submit" value="提交">
         		</form>
 	          	<ul class="mtree bubba" style=" height:40px;">
-	            	<li>
-	            	<h6>
-	            		软件工程>>软件工程3班
-	            	</h6>
-	            	</li>
+	            	<li><h6>${frontnumber.scollege }>>${frontnumber.sclass }</h6></li>
+
 	          	</ul>
 	            <!-- This is mtree list -->
 	            <ul class="mtree bubba" style="margin-top:-10px;">

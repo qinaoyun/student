@@ -107,8 +107,8 @@ public class TimeProcessController {
 		}
 		
 		model.addAttribute("workEachYear",workEachYear);
-		model.addAttribute("workDiffyearList",workDiffyearList);
-		model.addAttribute("workcompList",workcompList);
+		model.addAttribute("workDiffyearList",workDiffyearList.size()==0?"":workDiffyearList);
+		model.addAttribute("workcompList",workcompList.size()==0?"":workcompList);
 		
 		return "front/timeProcessWork";
 	}
@@ -131,8 +131,8 @@ public class TimeProcessController {
 		}
 		
 		model.addAttribute("taskEachYear",taskEachYear);
-		model.addAttribute("taskDiffyearList",taskDiffyearList);
-		model.addAttribute("taskcompList",taskcompList);
+		model.addAttribute("taskDiffyearList",taskDiffyearList.size()==0?"":taskDiffyearList);
+		model.addAttribute("taskcompList",taskcompList.size()==0?"":taskcompList);
 		
 		return "front/timeProcessTask"; 
 	}
@@ -154,8 +154,8 @@ public class TimeProcessController {
 		}
 		
 		model.addAttribute("worknoticeEachYear",worknoticeEachYear);
-		model.addAttribute("worknoticeDiffyearList",worknoticeDiffyearList);
-		model.addAttribute("worknoticeList",worknoticeList);
+		model.addAttribute("worknoticeDiffyearList",worknoticeDiffyearList.size()==0?"":worknoticeDiffyearList);
+		model.addAttribute("worknoticeList",worknoticeList.size()==0?"":worknoticeList);
 		
 		return "front/timeProcessWorknotice";
 	}
@@ -177,8 +177,8 @@ public class TimeProcessController {
 		}
 		
 		model.addAttribute("tasknoticeEachYear",tasknoticeEachYear);
-		model.addAttribute("tasknoticeDiffyearList",tasknoticeDiffyearList);
-		model.addAttribute("tasknoticeList",tasknoticeList);
+		model.addAttribute("tasknoticeDiffyearList",tasknoticeDiffyearList.size()==0?"":tasknoticeDiffyearList);
+		model.addAttribute("tasknoticeList",tasknoticeList.size()==0?"":tasknoticeList);
 		
 		return "front/timeProcessTasknotice";
 	}

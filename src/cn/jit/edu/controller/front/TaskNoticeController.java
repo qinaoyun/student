@@ -132,56 +132,60 @@ public class TaskNoticeController {
 	}
 	
 	//从数据库拉取main界面的主要信息
-		public void toMain(ModelMap model,User user){
-			List<Object> worklist = entityDao.createQuery("from worknotice where wclass='" + user.getSclass() + "' order by wmodifydate desc");
-			model.addAttribute("obj", worklist);
-			List<Object> tasklist = entityDao.createQuery("from tasknotice where tclass='" + user.getSclass() + "' order by tmodifydate desc");
-			model.addAttribute("tasklist",tasklist);
+	public void toMain(ModelMap model,User user){
+//		User user = (User)request.getSession().getAttribute("frontnumber");
+		List<Object> worklist=entityDao.createQuery("from worknotice where wclass='"+user.getSclass()+"' order by wuploaddate desc");
+		model.addAttribute("obj", worklist);
+		model.addAttribute("listsize",worklist.size());
+		List<Object> tasklist = entityDao.createQuery("from tasknotice where tclass='"+user.getSclass()+"' order by tmodifydate desc");
+		model.addAttribute("tasklist",tasklist);
+//		查找离上交日期最近的四条数据  SELECT TOP 2 * FROM table_name ORDER BY datetime desc
+		
+		
+		
+		List<Object> numtasklist = new ArrayList();//用于存储每个分组已选人数的集合
+		List<Object> taskeach = entityDao.createQuery("from taskcomplete");
+		for(int i=0;i<tasklist.size();i++){
+			int count = 0;//用于计算每一个分组的人数
+			TaskNotice tasknoticeTmp = (TaskNotice)tasklist.get(i);
 			
-			List<Object> numtasklist = new ArrayList();//用于存储每个分组已选人数的集合
-			List<Object> taskeach = entityDao.createQuery("from taskcomplete");
-			List<Object> wnoticelist = entityDao.createQuery("from worknotice where wclass='"+user.getSclass()+"' order by wuploaddate desc");
-			model.addAttribute("wnoticelist",wnoticelist);
-			for(int i=0;i<tasklist.size();i++){
-				int count = 0;//用于计算每一个分组的人数
-				TaskNotice tasknoticeTmp = (TaskNotice)tasklist.get(i);
-				
-				for(int j=0;j<taskeach.size();j++){
-					TaskComplete taskCompTmp = (TaskComplete)taskeach.get(j);
-					if(tasknoticeTmp.getID() == taskCompTmp.getWstaskid()){
-						count++;
-					}
+			for(int j=0;j<taskeach.size();j++){
+				TaskComplete taskCompTmp = (TaskComplete)taskeach.get(j);
+				if(tasknoticeTmp.getID() == taskCompTmp.getWstaskid()){
+					count++;
 				}
-				numtasklist.add(count);
 			}
-			
-			int[] sumtasklist = new int[numtasklist.size()];
-			for(int i=0;i<numtasklist.size();i++){
-				sumtasklist[i] = (Integer)numtasklist.get(i);
-			}
-			
-			
-			List<Object> numworklist = new ArrayList();//用于存储每个作业已经上交人数的集合
-			List<Object> workeach = entityDao.createQuery("from worksubmit");
-			for(int i=0;i<worklist.size();i++){
-				int count = 0;//用于计算每一个作业的上交人数
-				WorkNotice worknoticeTemp = (WorkNotice)worklist.get(i);
-				
-				for(int j=0;j<workeach.size();j++){
-					WorkSubmit workSubTmp = (WorkSubmit)workeach.get(j);
-					if(worknoticeTemp.getID() == workSubTmp.getWsworkid()){
-						count++;
-					}
-				}
-				numworklist.add(count);
-			}
-			int[] sumworklist = new int[numworklist.size()];
-			for(int i=0;i<numworklist.size();i++){
-				sumworklist[i] = (Integer)numworklist.get(i);
-			}
-			
-			model.addAttribute("sumworklist",sumworklist);
-			model.addAttribute("sumtasklist",sumtasklist); 
+			numtasklist.add(count);
 		}
+		
+		int[] sumtasklist = new int[numtasklist.size()];
+		for(int i=0;i<numtasklist.size();i++){
+			sumtasklist[i] = (Integer)numtasklist.get(i);
+		}
+		
+		
+		List<Object> numworklist = new ArrayList();//用于存储每个作业已经上交人数的集合
+		List<Object> workeach = entityDao.createQuery("from worksubmit");
+		for(int i=0;i<worklist.size();i++){
+			int count = 0;//用于计算每一个作业的上交人数
+			WorkNotice worknoticeTemp = (WorkNotice)worklist.get(i);
+			
+			for(int j=0;j<workeach.size();j++){
+				WorkSubmit workSubTmp = (WorkSubmit)workeach.get(j);
+				if(worknoticeTemp.getID() == workSubTmp.getWsworkid()){
+					count++;
+				}
+			}
+			numworklist.add(count);
+		}
+		int[] sumworklist = new int[numworklist.size()];
+		for(int i=0;i<numworklist.size();i++){
+			sumworklist[i] = (Integer)numworklist.get(i);
+		}
+		
+		model.addAttribute("sumworklist",sumworklist);
+		model.addAttribute("sumtasklist",sumtasklist); 
+	}
+	
 		
 }

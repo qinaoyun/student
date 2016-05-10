@@ -10,17 +10,18 @@
         <div class="avatar">
             <img src="<%=request.getContextPath()%>${frontnumber.sheadimg}" alt="" />         
         </div>
-       <div style="margin-top:20px">
+       <div style="margin-top:100px;margin-left:-83px;width:80px;height:130px;">
         ${frontnumber.sdesc}
        </div>
- <h4>${frontnumber.sname}<a href="<%=request.getContextPath()%>/logout.do" id="loginOut">退出</a></h4>
+       <div style="margin-top:-200px;">
+ <h4>${frontnumber.sname}<a href="<%=request.getContextPath()%>/logout.do" id="loginOut"><small>退出</small></a></h4>
         <span class="subtitle">
       <h6>${frontnumber.scollege}</h6>
        </span>
         <span class="subtitle">
       <h6>${frontnumber.sclass}</h6>
          </span>
-          
+          </div>
            
     </div>
          

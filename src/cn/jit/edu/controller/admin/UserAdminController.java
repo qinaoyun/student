@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.jit.edu.dao.EntityDao;
 import cn.jit.edu.entity.Teacher;
 import cn.jit.edu.entity.User;
+import cn.jit.edu.util.MD5Util;
 
 @Controller
 public class UserAdminController {
@@ -31,48 +32,35 @@ public class UserAdminController {
 	
 	@RequestMapping(value="/adminlogin.do",method = RequestMethod.POST)
 	  public String testLogin(@RequestParam(value="sno")String sno, String spasswd, HttpServletRequest request,ModelMap model) 
-			  throws NoSuchAlgorithmException{
+			  throws Exception{
 		 //md5加密
-		System.out.println(sno);
-		  MessageDigest md = MessageDigest.getInstance("MD5");  
-        md.update(spasswd.getBytes());//update处理  
-        byte [] encryContext = md.digest();//调用该方法完成计算  
-
-        int i;  
-        StringBuffer buf = new StringBuffer("");  
-        for (int offset = 0; offset < encryContext.length; offset++) {//做相应的转化（十六进制）  
-            i = encryContext[offset];  
-            if (i < 0) i += 256;  
-            if (i < 16) buf.append("0");  
-            buf.append(Integer.toHexString(i));  
-       } 
-        //---
-        System.out.println(buf);
-		  List<Object>  objlist1=entityDao.createQuery("from user");
+		 String buf=MD5Util.md5Encode(spasswd);
+		 String flag=sno.substring(0,2);
+		 if(flag=="00"){
+		 System.out.println(flag);
+		  List<Object>  objlist1=entityDao.createQuery("from teacher");
 		  for(int j=0;j<objlist1.size();j++){
-				User cus=(User)objlist1.get(j);
-				//System.out.println(cus.getPassword());
-				System.out.println(cus.getSno());
-				if(cus.getSno().equals(sno) &&buf.toString().equals(cus.getSpasswd())){
+				Teacher cus=(Teacher)objlist1.get(j);
+				if(cus.getTeano().equals(sno) &&buf.toString().equals(cus.getTeapasswd())){
 					//context.getSession().put("user", username);
 					
-					switch(Integer.parseInt(cus.getStatus())){
+					switch(Integer.parseInt(cus.getTeastatus())){
 					case 0:
-						cus.setStatus("普通学生");
+						cus.setTeastatus("普通学生");
 						break;
 					case 1:
-						cus.setStatus("学委");
+						cus.setTeastatus("学委");
 						break;
 					case 2:
-						cus.setStatus("班长");
+						cus.setTeastatus("班长");
 						break;
 					case 3:
-						cus.setStatus("老师");
+						cus.setTeastatus("老师");
 						break;
 				}
 					request.getSession().setAttribute("user", cus);
 //					model.addAttribute("username", sno);
-					if(cus.getStatus() == "普通学生"){
+					if(cus.getTeastatus() == "普通学生"){
 						return "error";
 					   
 					}
@@ -80,6 +68,41 @@ public class UserAdminController {
 				}
 		  }
 	        return "error";
+		 }
+		 else {
+			  List<Object>  objlist1=entityDao.createQuery("from user");
+			  for(int j=0;j<objlist1.size();j++){
+					User cus=(User)objlist1.get(j);
+					//System.out.println(cus.getPassword());
+					System.out.println(cus.getSno());
+					if(cus.getSno().equals(sno) &&buf.toString().equals(cus.getSpasswd())){
+						//context.getSession().put("user", username);
+						
+						switch(Integer.parseInt(cus.getStatus())){
+						case 0:
+							cus.setStatus("普通学生");
+							break;
+						case 1:
+							cus.setStatus("学委");
+							break;
+						case 2:
+							cus.setStatus("班长");
+							break;
+						case 3:
+							cus.setStatus("老师");
+							break;
+					}
+						request.getSession().setAttribute("user", cus);
+//						model.addAttribute("username", sno);
+						if(cus.getStatus() == "普通学生"){
+							return "error";
+						   
+						}
+						return "admin/Main";
+					}
+			  }
+		        return "error";
+		 }
 	    }
 	//注销登录
 	@RequestMapping(value = "/adminlogout.do",method = RequestMethod.GET)  
@@ -149,6 +172,7 @@ public class UserAdminController {
 			tea.setTeaemail(request.getParameter("teaemail"));
 			tea.setTeacontact(request.getParameter("teacontact"));
 			tea.setTeacollege(request.getParameter("teacollege"));
+			tea.setTeastatus(Integer.toHexString(3));
 			
 			//md5加密
 			MessageDigest md = MessageDigest.getInstance("MD5");  
@@ -216,7 +240,7 @@ public class UserAdminController {
 			return null;		  
 		  }
 		
-		//添加班委
+		//添加学生
 		@RequestMapping(value = "/addstu.do", method = RequestMethod.POST)
 		public String addstu(HttpServletRequest request,HttpServletResponse response,User user) throws IOException, NoSuchAlgorithmException {
 			System.out.println("upload234234");

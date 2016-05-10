@@ -121,18 +121,33 @@
                     <div class="col-sm-8  martop padleft " >
                             <div class="row">
                                 <div class=" inlinelist row field_radio">
-                                    <div class="rowRadio col-sm-3 col-sm-offset-0">
-                                       <input type="radio" name="ssex" value="1" id="radio_v1" checked disabled="disabled"">
-                                        <label for="radio_v1" class="radio1" style="text-align:left;">男生</label>
-                                    </div>
-                                    <div class="rowRadio col-sm-3 ">
-                                        <input type="radio" name="ssex" value="0" id="radio_v2" disabled="disabled" >
-                                        <label for="radio_v2" class="radio2" style="text-align: left;">女生</label>
-                                    </div>
+                                <c:choose>
+                                	<c:when test="${frontnumber.ssex == '1'}">
+	                                    <div class="rowRadio col-sm-3 col-sm-offset-0">
+	                                       	<input type="radio" name="ssex" value="1" id="radio_v1" checked disabled="disabled"">
+	                                        <label for="radio_v1" class="radio1" style="text-align:left;">男生</label>
+	                                    </div>
+	                                    <div class="rowRadio col-sm-3 ">
+	                                        <input type="radio" name="ssex" value="0" id="radio_v2" disabled="disabled" >
+	                                        <label for="radio_v2" class="radio2" style="text-align: left;">女生</label>
+	                                    </div>
+	                                </c:when>
+	                                <c:when test="${frontnumber.ssex == '0'}">
+	                                    <div class="rowRadio col-sm-3 col-sm-offset-0">
+	                                       	<input type="radio" name="ssex" value="1" id="radio_v1" disabled="disabled"">
+	                                        <label for="radio_v1" class="radio1" style="text-align:left;">男生</label>
+	                                    </div>
+	                                    <div class="rowRadio col-sm-3 ">
+	                                        <input type="radio" name="ssex" value="0" id="radio_v2" checked disabled="disabled" >
+	                                        <label for="radio_v2" class="radio2" style="text-align: left;">女生</label>
+	                                    </div>
+	                                </c:when>
+	                            </c:choose>
                                 </div>
                             </div>
                     </div>
                 </div>
+
 
 
 				<div class="form-group martop row" >

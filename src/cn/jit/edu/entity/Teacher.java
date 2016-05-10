@@ -23,6 +23,17 @@ public class Teacher {
 	@Column(name = "teacollege", nullable = false)
 	String teacollege;								//所属学院；暂时显示插入中文。。
 	
+	@Column(name = "teastatus", nullable = false)
+	String teastatus;	
+	
+	public String getTeastatus() {
+		return teastatus;
+	}
+
+	public void setTeastatus(String teastatus) {
+		this.teastatus = teastatus;
+	}
+
 	@Column(name = "teaemail", nullable = false)
 	String teaemail;									//电子邮箱
 	

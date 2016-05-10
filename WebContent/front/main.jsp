@@ -132,11 +132,19 @@ if($("#diagram a").length==0)
     $("#worknotice").css("font-size",40);
 }
 if($("#diagramm a").length==0)
-{   $("#diagramm a").html("暂时还没有作业发布");
-    $("#worknotice").css("font-size",40);
+{ 
+	$("#diagramm").html("暂时还没有分组发布");
+    $("#diagramm").css("font-size",40);
   
 }
 });
+</script>
+<script>
+				function collapse(){	
+					$("#collapse1").removeClass().addClass("panel-collapse collapse in"); 
+					$("#collapse2").removeClass().addClass("panel-collapse collapse in");
+					$("#collapse3").removeClass().addClass("panel-collapse collapse in");
+				}
 </script>
 </head>
 <body onload="window_onload()">
@@ -169,7 +177,7 @@ if($("#diagramm a").length==0)
                      /*  将string类型转化成date*/
                      var dt = new Date(result.replace(/-/g,"/"));
                      var time=dt.getTime()-date.getTime();
-                                   
+                            
 					$(".inner_messa").css({"width":"100%","height":"80px","box-shadow":"0px 0px 5px pink","background":"#fff","margin-top":"10px","border-radius":"10px"});
 					$(".inner_messa p").css({"margin-left":"10px"});
 					if(time<0){
@@ -325,13 +333,16 @@ if($("#diagramm a").length==0)
 				</div>
                              	 	</p>
                             	</div>
-                            	<input type="hidden" value="${id.count}" id="tasktagg"> 
-                            	<div id="collapse${id.count }" class="panel-collapse collapse">
+                            	
+                            	<div id="collapse${id.count}" class="panel-collapse collapse">
                             	<div class="panel-body">
                                			<a href="<%=request.getContextPath()%>/workcontrol.do?worknoticeid=${list.ID}">${list.wcoursedesc}</a>
                               		    
                               		</div>
                             	</div>
+                            	   <c:if test="${id.count<=3}">
+                            	  <script>collapse()</script>
+                            	</c:if>
                             		<c:choose>
 							<c:when test="${frontnumber.status=='普通学生'}"> 
                              
