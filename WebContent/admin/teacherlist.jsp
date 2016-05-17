@@ -12,6 +12,7 @@
 <script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="js/teacherlist.js"></script>
+<script type="text/javascript" src="js/queryselect.js"></script>
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center'">
@@ -22,7 +23,7 @@
        <form id="fm" method="post">
        <table id="tblAdd1" class="view">
        	<tr>
-       		<input type="hidden" value="${user.status}" id="hidstatus"> 
+       		<input type="hidden" value="${user.status}${teacher.teastatus}" id="hidstatus"> 
        		<th><label>工号：</label></th>
        		<td><input name="teano" class="easyui-validatebox" required="true" /></td>
        	</tr>
@@ -46,13 +47,9 @@
        		<th><label>联系方式：</label></th>
        		<td><input name="teacontact" class="easyui-vlidatebox" /></td>
        	</tr>
-        <tr>
-                    <td>学院</td>
-                    <td><select name="scollege" id="scollege"class="easyui-vlidatebox" >
-                    <c:forEach var="college"  items="${obj}">
-                                   <option value="${college.ID}" id="scollegeid">${college.collogeinfo}</option>
-<!--                                     <input type="hidden" id="scollegeid" value="" />  -->
-                     </c:forEach>
+    <tr>
+                    <th><label>请选择学院：</label></th>
+                    <td><select name="teacollege" id="teacollegee"class="easyui-vlidatebox" >
                     </select>
 </td>
                 </tr>
@@ -87,10 +84,12 @@
 				       		<th><label>联系方式：</label></th>
 				       		<td><input id="teacontact" type="text" name="teacontact" class="easyui-vlidatebox" /></td>
 				       	</tr>
-				       	<tr>
-				       		<th><label>学院：</label></th>
-				       		<td><input id="teacollege" name="teacollege" class="easyui-vlidatebox" /></td>
-				       	</tr>
+				        <tr>
+                    <th><label>请选择学院：</label></th>
+                    <td><select name="teacollege" id="teacollege"class="easyui-vlidatebox" >
+                    </select>
+</td>
+                </tr>
 				       </table>
 				       <input type="hidden" name="ID" />
 				       <a href="javascript:void(0)" class="easyui-linkbutton" onclick="editData()" iconcls="icon-save">保存</a>

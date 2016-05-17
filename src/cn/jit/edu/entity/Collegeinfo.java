@@ -22,12 +22,12 @@ public class  Collegeinfo{
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	int ID;									//主键id
 
-	public String getCollogeinfo() {
+	public String getCollegeinfo() {
 		return collegeinfo;
 	}
 
-	public void setCollogeinfo(String collogeinfo) {
-		this.collegeinfo = collogeinfo;
+	public void setCollegeinfo(String collegeinfo) {
+		this.collegeinfo = collegeinfo;
 	}
 
 

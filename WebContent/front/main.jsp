@@ -340,9 +340,8 @@ if($("#diagramm a").length==0)
                               		    
                               		</div>
                             	</div>
-                            	   <c:if test="${id.count<=3}">
+                            	
                             	  <script>collapse()</script>
-                            	</c:if>
                             		<c:choose>
 							<c:when test="${frontnumber.status=='普通学生'}"> 
                              
@@ -364,7 +363,9 @@ if($("#diagramm a").length==0)
 	                <c:forEach items="${obj}" var="list" varStatus="id">	
 							<div class="panel panel-default" style="margin-top:-17px;">
                             	<div class="panel-heading" style="height:50px">
+                            	<script>collapse()</script>
                             	<script>
+                            	$("#showmore").hide();
 	$(function(){
 		$(".panel-heading").css("background","#ffffff");
 		 var $hei = $(".panel-heading").width()/8*7;

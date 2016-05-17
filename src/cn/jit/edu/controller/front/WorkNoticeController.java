@@ -55,9 +55,8 @@ public class WorkNoticeController {
 		entityDao.delete("delete from worknotice where ID="+wnoticeid+"");
 		entityDao.delete("delete from messagely  where msworkid ="+wnoticeid+"");
 		List<Object>  list=entityDao.createQuery("from worknotice");
-		model.addAttribute("obj", list);
-		
-		return "front/main";
+		model.addAttribute("obj", list);		
+		return "front/loading";
 	}
 	//作业信息的修改	
 	@RequestMapping(value = "/worknoticemodify.do", method = RequestMethod.POST)

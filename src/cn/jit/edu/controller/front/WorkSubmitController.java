@@ -52,6 +52,7 @@ public class WorkSubmitController{
 					  WorkNotice wnotice=(WorkNotice)worknotice.get(a);
 					  wsubmit.setWsname(wnotice.getWname());
 					  wsubmit.setWscoursenum(wnotice.getWcoursenum());
+					  wsubmit.setWsteachersno(wnotice.getWcourseteacher());
 				  }
 				  wsubmit.setWsno(user.getSno());
 				  wsubmit.setWssname(user.getSname());

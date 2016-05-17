@@ -1,5 +1,4 @@
 $(function(){
-
   if($("#hidstatus").val()=="老师"){
   $('#dgList').datagrid({
         url: '../list.do?T=teacher&_r='+Math.random(),
@@ -37,8 +36,9 @@ $(function(){
 			    iconCls: 'icon-add',
 			    text: '增加',
 			    handler: function () {
-			    	$("#add").form("clear");
+			    	$("#add").form("clear");			    	
 					$("#add").dialog("open");
+					querycollege();
 			    }
 			},
 			'-',{
@@ -167,7 +167,7 @@ function check(){
 	var passwd1=$("#passwd").val();
 	var passwd2=$("#passwd1").val();
 	if(passwd1!=passwd2){
-		$("#passwd1").val("");
+		$("#passwd1").val("两次输入的密码要一致啊");
 	}
 }
 function saveData(){	
@@ -176,14 +176,6 @@ function saveData(){
         return false;
     }
     var url="../addteacher.do";
-//    var postData = $("#fm").serializeArray();
-//    var teapasswd=$("#passwd").val();
-//    var data = {};
-//    alert("确定吗");
-//    alert(postData);
-//    $.each(postData, function(i, field){
-//    	data[field.name] = field.value;
-//      });
     
     $.post(url,{
     	teano:$("input[name='teano']").val(),
@@ -191,7 +183,7 @@ function saveData(){
     	passwd:$("input[name='teapasswd']").val(),
     	teaemail:$("input[name='teaemail']").val(),
     	teacontact:$("input[name='teacontact']").val(),
-    	teacollege:$("input[name='teacollege']").val()
+    	teacollege:$("#teacollegee").val()
     },function (msg) {
         if (msg=="yes") {
 //        	alert("确定吗");
@@ -225,6 +217,7 @@ function viewData(){
 //    	    	$("input[name='teacontact']").val(msg[i].teacontact);
     	    	$("input[name='teacontact']").attr("value",msg[i].teacontact);
     	    	$("input[name='teacollege']").val(msg[i].teacollege);
+    	    	$("select[name='teacollege']").val(msg[i].teacollege);
         	}
         }
 	});	
@@ -284,3 +277,5 @@ function deleteData(){
  function deleteCallBack(){
 	 $("#dgList").datagrid("reload");
  }
+  
+ 

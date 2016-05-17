@@ -7,14 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 @Entity (name="course")
 public class Course {
 	@Column(name = "coursename", nullable = false)
 	String coursename;								//课程名称
 	@Column(name = "courseno", nullable = false) 
 	String courseno;								//课程代号
+	public String getCollege() {
+		return college;
+	}
+
+	public void setCollege(String college) {
+		this.college = college;
+	}
+
 	@Column(name = "teano", nullable = false)
 	String teano;									//任课老师工号
 	@Column(name = "teaname", nullable = false)

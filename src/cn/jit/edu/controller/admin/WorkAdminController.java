@@ -2,6 +2,7 @@ package cn.jit.edu.controller.admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
@@ -38,7 +39,6 @@ public class WorkAdminController {
 			  String rows=req.getParameter("rows");
 			  System.out.println("coming .........!"+page+"  "+rows);
 			  String flag=req.getParameter("T");
-			  System.out.println(flag);
 			  JsonLists1  jobj=new JsonLists1();
 			  List<Object> objlist=null;
 			  List<Object>  count=null;
@@ -134,6 +134,70 @@ public class WorkAdminController {
 		  
 	  }	
 
+	
+	@RequestMapping("/tealistwork.do")	      
+	  public @ResponseBody   JsonLists1 teacheck(HttpServletRequest req) {
+		  System.out.println("coming .........!");
+		  Teacher teacher = (Teacher)req.getSession().getAttribute("teacher");
+		  String page=req.getParameter("page");
+		  String rows=req.getParameter("rows");
+		  String wsclass=req.getParameter("wsclass");
+		  System.out.println(URLDecoder.decode(wsclass)+"999999");
+		  String wscoursenum=req.getParameter("wscoursenum");
+		  System.out.println(URLDecoder.decode(wsclass)+"88888888"+wscoursenum);
+		  String flag=req.getParameter("T");
+		  JsonLists1  jobj=new JsonLists1();
+		  List<Object> objlist=null;
+		  List<Object>  count=null;
+		  if(flag.equals("worknotice")){
+			  objlist=entityDao.findPage("from worknotice where wcourseteacher='" +teacher.getTeaname()+ "'order by wmodifydate desc", page, rows);  			 
+			  count=entityDao.createQuery("from worknotice where wcourseteacher='" +teacher.getTeaname()+ "'");
+		  }else if(flag.equals("worksubmit")){
+			  objlist=entityDao.findPage("from worksubmit  where wsclass='" +URLDecoder.decode(wsclass)+ "'and wscoursenum='"+ wscoursenum+ "'order by wsmodifydate desc", page, rows);  				  
+			  count=entityDao.createQuery("from worksubmit where wsclass='" +URLDecoder.decode(wsclass)+ "'and wscoursenum='"+ wscoursenum+ "'");
+		  }
+		  else if(flag.equals("tasknotice")){
+			  objlist=entityDao.findPage("from tasknotice where tcourseteacher='" +teacher.getTeaname()+ "'order by tmodifydate desc", page, rows);  				  
+			  count=entityDao.createQuery("from tasknotice where  tcourseteacher='" +teacher.getTeaname()+ "'");
+		  }
+		  else{
+			  objlist=entityDao.findPage("from taskcomplete where tcclass='" +URLDecoder.decode(wsclass)+ "'and tccoursenum='"+ wscoursenum+ "'order by tccompletedate desc", page, rows);  	
+			  count=entityDao.createQuery("from taskcomplete where tcclass='" +URLDecoder.decode(wsclass)+ "'and tccoursenum='"+ wscoursenum+ "'");
+		  }
+		  
+		   jobj.setTotal(count.size());
+		   jobj.setRows(objlist);
+		   
+		  return jobj;
+		  
+	  }
+	
+	@RequestMapping("/tealistwork1.do")	      
+	  public @ResponseBody   JsonLists1 teacheck1(HttpServletRequest req) {
+		  System.out.println("coming .........!");
+		  Teacher teacher = (Teacher)req.getSession().getAttribute("teacher");
+		  String page=req.getParameter("page");
+		  String rows=req.getParameter("rows");
+		  String flag=req.getParameter("T");
+		  JsonLists1  jobj=new JsonLists1();
+		  List<Object> objlist=null;
+		  List<Object>  count=null;
+		  if(flag.equals("worknotice")){
+			  objlist=entityDao.findPage("from worknotice where wcourseteacher='" +teacher.getTeaname()+ "'order by wmodifydate desc", page, rows);  			 
+			  count=entityDao.createQuery("from worknotice where wcourseteacher='" +teacher.getTeaname()+ "'");
+		  }
+		  else {
+			  objlist=entityDao.findPage("from tasknotice where tcourseteacher='" +teacher.getTeaname()+ "'order by tmodifydate desc", page, rows);  				  
+			  count=entityDao.createQuery("from tasknotice where  tcourseteacher='" +teacher.getTeaname()+ "'");
+		  }
+		  
+		   jobj.setTotal(count.size());
+		   jobj.setRows(objlist);
+		   
+		  return jobj;
+		  
+	  }
+	
 	
 
 class  JsonLists1

@@ -108,7 +108,7 @@ t=t-1;
 // document.getElementById("hints").innerHTML=t;
 if (t==0)
 {
-	document.location.href="<%=request.getContextPath()%>/querymain.do";
+	document.location.href="<%=request.getContextPath()%>/tasknoticeMain.do";
 }
 }
 </script>

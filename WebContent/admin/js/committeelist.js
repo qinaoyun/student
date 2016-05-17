@@ -38,24 +38,6 @@ $(function(){
     					$("#add").dialog("open");
     			    }
     			},
-//    			'-',
-//			{
-//			    iconCls: 'icon-edit',
-//			    text: '增加',
-//			    handler: function () {
-//					var rows = $('#dgList').datagrid('getSelections');
-//					if (rows.length > 0) {
-//					   //处理编辑
-//					    if (rows[0].filetype == 'doc' || rows[0].filetype == 'docx' || rows[0].filetype == 'pdf' || rows[0].filetype == 'jpg' || rows[0].filetype == 'xls' || rows[0].filetype == 'xlsx')
-//					        window.location.href="../printFile.html?fileID=" + rows[0].id + "&filetype=" + rows[0].filetype + "&fileName=" + rows[0].documentName;
-//					    else
-//			    	window.location.href="../admin/useradd.jsp";
-//					        $.messager.alert('友情提示', rows[0].filetype + '系统暂时此类文件不支持自助打印', 'info');
-//					}else{
-//						$.messager.alert('友情提示','请选择需要编辑的选项!','error');
-//					}
-//			    }
-//			},
 			'-',{
 			    iconCls: 'icon-remove',
 			    text: '删除',
@@ -165,10 +147,7 @@ $(function(){
 				    iconCls: 'icon-reload',
 				    text: '刷新',
 				    handler: function () {
-				    	$("#dgList").datagrid("reload");
-		
-						
-						
+				    	$("#dgList").datagrid("reload");						
 				    }
 				}
 			 ]
@@ -190,22 +169,12 @@ function saveData(){
         return false;
     }
     var url="../addcommittee.do";
-//    var postData = $("#fm").serializeArray();
-//    var teapasswd=$("#passwd").val();
-//    var data = {};
-//    alert("确定吗");
-//    alert(postData);
-//    $.each(postData, function(i, field){
-//    	data[field.name] = field.value;
-//      });
-//    alert($("input[name='sname']").val());
-//    alert($("input[name='status']").val());
     $.post(url,{
     	sname:$("input[name='sname']").val(),
     	sno:$("input[name='sno']").val(),
     	spasswd:$("input[name='spasswd']").val(),
-    	sclass:$("input[name='sclass']").val(),
-    	scollege:$("input[name='scollege']").val(),
+    	sclass:$("#sclasss").val(),
+    	scollege:$("#scollegee").val(),
     	semail:$("input[name='semail']").val(),
     	scontact:$("input[name='scontact']").val(),
     	sdesc:$("input[name='sdesc']").val(),
@@ -236,11 +205,12 @@ function viewData(){
         success: function(msg){
         	
         	for ( var i = 0; i < msg.length; i++) {
-//        		alert("adsfa"+msg[i].id);
         		$("input[name='ID']").val(msg[i].id);
         		$("input[name='sname']").val(msg[i].sname);
         		$("input[name='sno']").val(msg[i].sno);
-    	    	$("input[name='sclass']").val(msg[i].sclass);
+    	    	$("#sclass").val(msg[i].sclass);
+    	    	$("select[name='sclass']").val(msg[i].sclass);
+    	    	$("select[name='scollege']").val(msg[i].scollege);
     	    	$("input[name='scollege']").val(msg[i].scollege);
     	    	$("input[name='scontact']").val(msg[i].scontact);
     	    	$("input[name='semail']").val(msg[i].semail);

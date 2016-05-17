@@ -36,7 +36,7 @@ public class UserAdminController {
 		 //md5加密
 		 String buf=MD5Util.md5Encode(spasswd);
 		 String flag=sno.substring(0,2);
-		 if(flag=="00"){
+		 if(flag.equals("00")){
 		 System.out.println(flag);
 		  List<Object>  objlist1=entityDao.createQuery("from teacher");
 		  for(int j=0;j<objlist1.size();j++){
@@ -58,7 +58,7 @@ public class UserAdminController {
 						cus.setTeastatus("老师");
 						break;
 				}
-					request.getSession().setAttribute("user", cus);
+					request.getSession().setAttribute("teacher", cus);
 //					model.addAttribute("username", sno);
 					if(cus.getTeastatus() == "普通学生"){
 						return "error";
@@ -108,7 +108,9 @@ public class UserAdminController {
 	@RequestMapping(value = "/adminlogout.do",method = RequestMethod.GET)  
     public String logout(HttpSession httpSession,HttpServletRequest request){  
         httpSession.getAttribute("username"); 
-        request.getSession().setAttribute("user", null);
+        httpSession.invalidate();
+//        request.getSession().invalidate();
+//        request.getSession().setAttribute("user", null);
         return "Login";  
     }
 	
@@ -162,6 +164,54 @@ public class UserAdminController {
 			  return jobj;
 			  
 		  }
+	
+	@RequestMapping("/listall.do")
+	  public @ResponseBody   JsonLists listall(HttpServletRequest req) {
+		  String page=req.getParameter("page");
+		  String rows=req.getParameter("rows");
+		  System.out.println("coming .........!"+page+"  "+rows);
+		  String flag=req.getParameter("T");
+		  System.out.println(flag);
+		  JsonLists  jobj=new JsonLists();
+		  List<Object> objlist=null;
+		  List<Object>  count=null;
+		  if(flag.equals("teacher")){
+			  objlist=entityDao.findPage("from teacher order by modifydate desc", page, rows);  			 
+			  count=entityDao.createQuery("from teacher");
+		  }else if(flag.equals("stu")){
+			  objlist=entityDao.findPage("from user where status='0' order by smodifydate desc", page, rows);  
+			  for(int j=0;j<objlist.size();j++){
+					User cus=(User)objlist.get(j);
+					switch(Integer.parseInt(cus.getStatus())){
+					case 0:
+						cus.setStatus("普通学生");
+						break;		
+				}						
+			  }
+			  count=entityDao.createQuery("from user where status='0'");
+		  }
+		  else{
+			  objlist=entityDao.findPage("from user where status='1' or status='2' order by smodifydate desc", page, rows);  
+			  for(int j=0;j<objlist.size();j++){
+					User cus=(User)objlist.get(j);
+					switch(Integer.parseInt(cus.getStatus())){
+					case 1:
+						cus.setStatus("学委");
+						break;
+					case 2:
+						cus.setStatus("班长");
+						break;			
+				}						
+			  }
+			  count=entityDao.createQuery("from user where status='1' or status='2'");
+		  }
+		  
+		   jobj.setTotal(count.size());
+		   jobj.setRows(objlist);
+		   
+		  return jobj;
+		  
+	  }
 		//添加老师
 		@RequestMapping(value = "/addteacher.do", method = RequestMethod.POST)
 		public String add(HttpServletRequest request,HttpServletResponse response,Teacher tea) throws IOException, NoSuchAlgorithmException {
@@ -217,19 +267,8 @@ public class UserAdminController {
 			user.setSsex(request.getParameter("ssex"));
 			user.setSdesc(request.getParameter("sdesc"));
 			//md5加密
-			MessageDigest md = MessageDigest.getInstance("MD5");  
-	        md.update(password.getBytes());//update处理  
-	        byte [] encryContext = md.digest();//调用该方法完成计算  
-	
-	        int i;  
-	        StringBuffer buf = new StringBuffer("");  
-	        for (int offset = 0; offset < encryContext.length; offset++) {//做相应的转化（十六进制）  
-	            i = encryContext[offset];  
-	            if (i < 0) i += 256;  
-	            if (i < 16) buf.append("0");  
-	            buf.append(Integer.toHexString(i));  
-	        }
-	        user.setSpasswd("123456");
+			String buf=MD5Util.md5Encode(password);
+	        user.setSpasswd(buf);
 	        user.setSmodifydate(new Date());
 			try{
 				entityDao.save(user);
@@ -243,7 +282,7 @@ public class UserAdminController {
 		//添加学生
 		@RequestMapping(value = "/addstu.do", method = RequestMethod.POST)
 		public String addstu(HttpServletRequest request,HttpServletResponse response,User user) throws IOException, NoSuchAlgorithmException {
-			System.out.println("upload234234");
+			
 			PrintWriter out = response.getWriter();
 			user.setSno(request.getParameter("sno"));
 			user.setSname(request.getParameter("sname"));
@@ -259,20 +298,8 @@ public class UserAdminController {
 			user.setStatus(Integer.toString(0));
 			user.setSsex(request.getParameter("ssex"));
 			user.setSdesc(request.getParameter("sdesc"));
-			//md5加密
-			MessageDigest md = MessageDigest.getInstance("MD5");  
-	        md.update(password.getBytes());//update处理  
-	        byte [] encryContext = md.digest();//调用该方法完成计算  
-	
-	        int i;  
-	        StringBuffer buf = new StringBuffer("");  
-	        for (int offset = 0; offset < encryContext.length; offset++) {//做相应的转化（十六进制）  
-	            i = encryContext[offset];  
-	            if (i < 0) i += 256;  
-	            if (i < 16) buf.append("0");  
-	            buf.append(Integer.toHexString(i));  
-	        }
-	        user.setSpasswd("123456");
+			String buf=MD5Util.md5Encode(password);
+	        user.setSpasswd(buf);
 	        user.setSmodifydate(new Date());
 			try{
 				entityDao.save(user);

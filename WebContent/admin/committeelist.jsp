@@ -12,6 +12,7 @@
 <script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="js/committeelist.js"></script>
+<script type="text/javascript" src="js/queryselect.js"></script>
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center'">
@@ -22,16 +23,20 @@
        <form id="fm" method="post">
        <table id="tblAdd1" class="view">
        <tr>
-       <input type="hidden" value="${user.status}" id="hidstatus"> 
+       <input type="hidden" value="${user.status}${teacher.teastatus}" id="hidstatus"> 
        		<th><label>姓名：</label></th>
        		<td><input name="sname" class="easyui-validatebox" required="true" /></td>
        	</tr>
        		<tr>
        	     <th><label>性别：</label></th>
-       	      <td><input name="ssex" type="radio" id="sex-1" value="1" class="easyui-validatebox"
+       	      <!-- <td><input name="ssex" type="radio" id="sex-1" value="1" class="easyui-validatebox"
                                data-message="请选择一个性别" data-easytip="class:easy-blue;"><label class="radio-label" for="sex-1">男</label>
                         <input name="ssex" type="radio" id="sex-2" value="0" class="easyui-validatebox">
                         <label class="radio-label" for="sex-2">女</label>
+                        </td> -->
+                        <td>
+                       <input type="radio" name="ssex"value="0" />男
+                           <input type="radio" checked="checked"  name="ssex"value="1"/>女
                         </td>
        	</tr>
        	<tr>
@@ -50,20 +55,43 @@
        	<tr>
        	     <th><label>身份：</label></th>
        	      <td><input name="status" type="radio" id="status-1" value="1" class="easyui-validatebox"
-                               data-message="请选择一个身份" data-easytip="class:easy-blue;"><label class="radio-label" for="status-1">学委</label>
+                               data-message="请选择一个身份" data-easytip="class:easy-blue;">
+                         <label class="radio-label" for="status-1">学委</label>
                         <input name="status" type="radio" id="status-2" value="2" class="easyui-validatebox">
                         <label class="radio-label" for="status-2">班长</label>
                         </td>
        	</tr>
-       		<tr>
-       		<th><label>班级：</label></th>
-       		<td><input name="sclass" class="easyui-validatebox" required="true" /></td>
-       	</tr>
-       	<tr>
+       <!-- 	<tr>
        		<th><label>学院：</label></th>
        		<td><input name="scollege"  type="text" class="easyui-vlidatebox" required="true" /></td>
-       	</tr>
-       	       
+       	</tr> -->
+       	 <tr>
+                    <th><label>请选择学院：</label></th>
+                    <td><select name="scollege" id="scollegee"class="easyui-vlidatebox" >
+                    </select></td>
+                </tr>
+       		<tr>
+                    <th><label>请选择班级：</label></th>
+                    <td><select name="sclass"id="sclasss"class="easyui-vlidatebox" >
+                               </select></td>
+                </tr>
+       	
+       	   <script>
+       	$("#scollegee").blur(function(){
+    
+   $.post("<%=request.getContextPath() %>/adminqueryclass.do",{
+    		    collegeinfo : $("#scollegee").val(),
+    		    			data:"test"	
+    		    		},
+    		    		function(data,status){
+    		    			var result = data; 
+    		    			$("#sclasss").empty();
+    		    			for ( var i = 0; i < result.length; i++) {
+    		    				$("#sclasss").append("<option value='"+result[i].classinfo+"'>"+result[i].classinfo+"</option>");  //添加一项option
+    		    			} 		
+    		    		},"json");
+    	});
+       	   </script>    
        	
        		
        
@@ -102,15 +130,15 @@
        		<th><label>学号：</label></th>
        		<td><input name="sno" class="easyui-validatebox" /></td>
        	</tr>
-       	
        		<tr>
-       		<th><label>班级：</label></th>
-       		<td><input name="sclass" class="easyui-validatebox" /></td>
-       	</tr>
-       	<tr>
        		<th><label>学院：</label></th>
        		<td><input name="scollege" class="easyui-vlidatebox" /></td>
        	</tr>
+       		<tr>
+       		<th><label>班级：</label></th>
+       		<td><input name="sclass" id="sclass"class="easyui-validatebox" /></td>
+       	</tr>
+       
        
        	<tr>
        		<th><label>邮箱：</label></th>
@@ -150,14 +178,42 @@
        		<th><label>学号：</label></th>
        		<td><input name="sno" id="sno" class="easyui-validatebox" /></td>
        	</tr>
-       		<tr>
-       		<th><label>班级：</label></th>
-       		<td><input name="sclass" id="sclass" class="easyui-validatebox" /></td>
-       	</tr>
-       	<tr>
+       <!-- 	<tr>
        		<th><label>学院：</label></th>
        		<td><input name="scollege" id="scollege" class="easyui-vlidatebox" /></td>
-       	</tr>
+       	</tr> -->
+       	  <tr>
+                    <th><label>请选择学院：</label></th>
+                    <td><select name="scollege" id="scollege"class="easyui-vlidatebox" >
+                    </select>
+</td>
+                </tr>
+       	<tr>
+                    <th><label>请选择班级：</label></th>
+                    <td><select name="sclass"id="sclass"class="easyui-vlidatebox" >
+                               </select></td>
+                </tr>
+       	
+       	   <script>
+       	$("#scollege").blur(function(){
+
+   $.post("<%=request.getContextPath() %>/adminqueryclass.do",{
+    		    collegeinfo : $("#scollege").val(),
+    		    			data:"test"	
+    		    		},
+    		    		function(data,status){
+    		    			var result = data; 
+    		    			alert(result[i].classinfo);
+    		    			$("#sclass").empty();
+    		    			for ( var i = 0; i < result.length; i++) {
+    		    				$("#sclass").append("<option value='"+result[i].classinfo+"'>"+result[i].classinfo+"</option>");  //添加一项option
+    		    			} 		
+    		    		},"json");
+    	});
+       	   </script>    
+       	
+       		
+       	
        	          
        	<tr>
        		<th><label>邮箱：</label></th>

@@ -17,10 +17,11 @@
 <div data-options="region:'center'">
   <table id="dgList" >
   </table>
-    <div id="view" title="查看作业发布信息" class="easyui-dialog" style="width: 400px; height: 280px; padding: 10px 20px;"
+    <div id="view" title="查看作业发布信息" class="easyui-dialog" style="width: 400px; height: 360px; padding: 10px 20px;overflow:hidden;"
        closed="true" data-options="iconCls: 'icon-view',buttons: '#dlg-buttons2'">
        <form id="fm" method="post">
        <table id="tblAdd1" class="view">
+       <input type="hidden" value="${user.status}${teacher.teastatus}" id="hidstatus">
        	<tr>
        		<th><label>任务名称：</label></th>
        		<td><input name="tname" class="easyui-validatebox" /></td>

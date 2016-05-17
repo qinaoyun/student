@@ -12,6 +12,8 @@
 <script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="js/stulist.js"></script>
+<script type="text/javascript" src="js/queryselect.js"></script>
+
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center'">
@@ -21,6 +23,7 @@
        closed="true" data-options="iconCls: 'icon-add',buttons: '#dlg-buttons'">
        <form id="fm" method="post">
        <table id="tblAdd1" class="view">
+       <input type="hidden" value="${user.status}${teacher.teastatus}" id="hidstatus">
        <tr>
        		<th><label>姓名：</label></th>
        		<td><input name="sname" class="easyui-validatebox" required="true" /></td>
@@ -37,14 +40,35 @@
        		<th><label>确认密码:</label></th>
        		<td><input id="spasswd1" name="spasswd1" type="password" class="easyui-validatebox" required="true" onChange="check();" /></td>
        	</tr>
+       		
+     <tr>
+                    <th><label>请选择学院：</label></th>
+                    <td><select name="scollege" id="scollegee"class="easyui-vlidatebox" >
+                    </select></td>
+                </tr>
        		<tr>
-       		<th><label>班级：</label></th>
-       		<td><input name="sclass" class="easyui-validatebox" required="true" /></td>
-       	</tr>
-       	<tr>
-       		<th><label>学院：</label></th>
-       		<td><input name="scollege" class="easyui-vlidatebox" required="true" /></td>
-       	</tr>
+                    <th><label>请选择班级：</label></th>
+                    <td><select name="sclass"id="sclasss"class="easyui-vlidatebox" >
+                               </select></td>
+                </tr>
+       	
+       	   <script>
+       	$("#scollegee").blur(function(){
+    
+   $.post("<%=request.getContextPath() %>/adminqueryclass.do",{
+    		    collegeinfo : $("#scollegee").val(),
+    		    			data:"test"	
+    		    		},
+    		    		function(data,status){
+    		    			var result = data; 
+    		    			$("#sclasss").empty();
+    		    			for ( var i = 0; i < result.length; i++) {
+    		    				$("#sclasss").append("<option value='"+result[i].classinfo+"'>"+result[i].classinfo+"</option>");  //添加一项option
+    		    			} 		
+    		    		},"json");
+    	});
+       	   </script>    
+       	
        	       	<tr>
        	     <th><label>性别：</label></th>
        	      <td><input name="ssex" type="radio" id="sex-1" value="1" class="easyui-validatebox"
@@ -56,11 +80,11 @@
        
        	<tr>
        		<th><label>邮箱：</label></th>
-       		<td><input name="semail" type="email" class="easyui-validatebox" required="true" /></td>
+       		<td><input name="semail"  type="email" class="easyui-validatebox"  required="true" /></td>
        	</tr>
        	<tr>
        		<th><label>联系方式：</label></th>
-       		<td><input name="scontact" class="easyui-vlidatebox" required="true" /></td>
+       		<td><input name="scontact"  class="easyui-vlidatebox"  required="true" /></td>
        	</tr>
        
        	<tr>
@@ -89,15 +113,15 @@
        		<td><input name="sno" class="easyui-validatebox" /></td>
        	</tr>
        	
-       		<tr>
-       		<th><label>班级：</label></th>
-       		<td><input name="sclass" class="easyui-validatebox" /></td>
-       	</tr>
+       		
        	<tr>
        		<th><label>学院：</label></th>
        		<td><input name="scollege" class="easyui-vlidatebox" /></td>
        	</tr>
-       
+       <tr>
+       		<th><label>班级：</label></th>
+       		<td><input name="sclass" class="easyui-validatebox" /></td>
+       	</tr>
        	<tr>
        		<th><label>邮箱：</label></th>
        		<td><input name="semail" type="email" class="easyui-validatebox" /></td>
@@ -136,14 +160,35 @@
        		<th><label>学号：</label></th>
        		<td><input name="sno" id="sno" class="easyui-validatebox" /></td>
        	</tr>
-       		<tr>
-       		<th><label>班级：</label></th>
-       		<td><input name="sclass" id="sclass" class="easyui-validatebox" /></td>
-       	</tr>
+       		 	  <tr>
+                    <th><label>请选择学院：</label></th>
+                    <td><select name="scollege" id="scollege"class="easyui-vlidatebox" >
+                    </select>
+</td>
+                </tr>
        	<tr>
-       		<th><label>学院：</label></th>
-       		<td><input name="scollege" id="scollege" class="easyui-vlidatebox" /></td>
-       	</tr>
+                    <th><label>请选择班级：</label></th>
+                    <td><select name="sclass"id="sclass"class="easyui-vlidatebox" >
+                               </select></td>
+                </tr>
+       	
+       	   <script>
+       	$("#scollege").blur(function(){
+
+   $.post("<%=request.getContextPath() %>/adminqueryclass.do",{
+    		    collegeinfo : $("#scollege").val(),
+    		    			data:"test"	
+    		    		},
+    		    		function(data,status){
+    		    			var result = data; 
+    		    			$("#sclass").empty();
+    		    			for ( var i = 0; i < result.length; i++) {
+    		    				$("#sclass").append("<option value='"+result[i].classinfo+"'>"+result[i].classinfo+"</option>");  //添加一项option
+    		    			} 		
+    		    		},"json");
+    	});
+       	   </script>    
+       
        	          
        	<tr>
        		<th><label>邮箱：</label></th>

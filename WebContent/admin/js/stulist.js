@@ -1,6 +1,7 @@
 $(function(){
+	if($("#hidstatus").val()=="老师"){
   $('#dgList').datagrid({
-        url: '../list.do?T=stu&_r='+Math.random(),
+        url: '../listall.do?T=stu&_r='+Math.random(),
         fit: true,
         fitColumns: true,
         idField: 'id',
@@ -37,24 +38,6 @@ $(function(){
     					$("#add").dialog("open");
     			    }
     			},
-//    			'-',
-//			{
-//			    iconCls: 'icon-edit',
-//			    text: '增加',
-//			    handler: function () {
-//					var rows = $('#dgList').datagrid('getSelections');
-//					if (rows.length > 0) {
-//					   //处理编辑
-//					    if (rows[0].filetype == 'doc' || rows[0].filetype == 'docx' || rows[0].filetype == 'pdf' || rows[0].filetype == 'jpg' || rows[0].filetype == 'xls' || rows[0].filetype == 'xlsx')
-//					        window.location.href="../printFile.html?fileID=" + rows[0].id + "&filetype=" + rows[0].filetype + "&fileName=" + rows[0].documentName;
-//					    else
-//			    	window.location.href="../admin/useradd.jsp";
-//					        $.messager.alert('友情提示', rows[0].filetype + '系统暂时此类文件不支持自助打印', 'info');
-//					}else{
-//						$.messager.alert('友情提示','请选择需要编辑的选项!','error');
-//					}
-//			    }
-//			},
 			'-',{
 			    iconCls: 'icon-remove',
 			    text: '删除',
@@ -114,13 +97,114 @@ $(function(){
 		 ]
 		
     });
+	}
+	else{
+		 $('#dgList').datagrid({
+		        url: '../list.do?T=stu&_r='+Math.random(),
+		        fit: true,
+		        fitColumns: true,
+		        idField: 'id',
+		        loadMsg: '正在加载系统功能...',
+		        pagination: true,
+		        singleSelect: true, 
+		        pageSize: 10,
+		        pageNumber: 1,
+		        checkOnSelect:false,
+		        pageList: [1,10, 20, 30],
+		        rownumbers: true,
+		        queryParams: '',//表格初始化往后台发送异步请求后台的json数据时候额外发送的请求参数。
+		        columns: [[
+				    { field: 'ck', checkbox: true, align: 'left', width: 50 },
+			    	{ field: 'id', title: '文件ID', width: 40, hidden: true },
+		            { field: 'sname', title: '姓名', width: 40, hidden: false },
+			    	{ field: 'sno', title: '学号', width: 40 },
+					{ field: 'status', title: '身份', width: 40 },
+					{ field: 'sclass', title: '班级', width: 40 },
+					{ field: 'scollege', title: '学院', width: 40 },
+//					{ field: 'sclass', title: '', width: 40 },
+					{ field: 'smodifydate', title: '注册日期', width: 50,formatter:function(value,row,index){  
+		                var unixTimestamp = new Date(value);  
+		                return unixTimestamp.toLocaleString();  
+		                } }
+					
+		        ]],
+		        toolbar: [
+		              	{
+		    			    iconCls: 'icon-add',
+		    			    text: '增加',
+		    			    handler: function () {
+		    			    	$("#add").form("clear");
+		    					$("#add").dialog("open");
+		    			    }
+		    			},
+					'-',{
+					    iconCls: 'icon-remove',
+					    text: '删除',
+					    handler: function () {
+							var rows = $('#dgList').datagrid('getSelections');
+							if (rows.length > 0) {
+							    //处理删除
+		                        if(confirm("确认要删除该文件吗？"))
+		                        	window.location.href="../delete.do?id="+ rows[0].id+"&F=stu";
+							}else{
+								$.messager.alert('友情提示','请选择需要删除的选项!','error');
+							}
+					    }
+					},
+					'-',{
+					    iconCls: 'icon-edit',
+					    text: '修改',
+					    handler: function () {
+							var rows = $('#dgList').datagrid('getSelections');
+							if (rows.length > 0) {
+							    //处理查看
+								if (rows[0].filetype == 'doc' || rows[0].filetype == 'docx' || rows[0].filetype == 'pdf' || rows[0].filetype == 'jpg' || rows[0].filetype == 'xls' || rows[0].filetype == 'xlsx')
+							        window.location.href="../printFile.html?fileID=" + rows[0].id + "&filetype=" + rows[0].filetype + "&fileName=" + rows[0].documentName;
+							    else
+							    	$("#edit").dialog("open");
+									viewData();
+//							    	window.location.href="../view.do?id="+ rows[0].id+"&S=teacher";
+							}else{
+								$.messager.alert('友情提示','请选择需要查看的选项!','error');
+							}
+					    }
+					},
+					'-',{
+						 iconCls: 'icon-view',
+						    text: '查看',
+						    handler: function () {
+								var rows = $('#dgList').datagrid('getSelections');
+								if (rows.length > 0){
+									$("#view").dialog("open");
+									viewData();
+								    	
+								}else{
+									$.messager.alert('友情提示','请选择需要查看的选项!','error');
+								}
+						    }
+						},
+					     '-',{
+					    iconCls: 'icon-reload',
+					    text: '刷新',
+					    handler: function () {
+					    	$("#dgList").datagrid("reload");
+			
+							
+							
+					    }
+					}
+				 ]
+				
+		    });
+		
+	}
   
 });
 function check(){
 	var passwd1=$("#spasswd").val();
 	var passwd2=$("#spasswd1").val();
 	if(passwd1!=passwd2){
-		$("#passwd1").val("");
+		$("#passwd1").val("两次密码要一样");
 	}
 	
 }
@@ -130,22 +214,12 @@ function saveData(){
         return false;
     }
     var url="../addstu.do";
-//    var postData = $("#fm").serializeArray();
-//    var teapasswd=$("#passwd").val();
-//    var data = {};
-//    alert("确定吗");
-//    alert(postData);
-//    $.each(postData, function(i, field){
-//    	data[field.name] = field.value;
-//      });
-//    alert($("input[name='sname']").val());
-    alert($("input[name='ssex']").val());
     $.post(url,{
     	sname:$("input[name='sname']").val(),
     	sno:$("input[name='sno']").val(),
     	spasswd:$("input[name='spasswd']").val(),
-    	sclass:$("input[name='sclass']").val(),
-    	scollege:$("input[name='scollege']").val(),
+    	sclass:$("#sclasss").val(),
+    	scollege:$("#scollegee").val(),
     	semail:$("input[name='semail']").val(),
     	scontact:$("input[name='scontact']").val(),
     	sdesc:$("input[name='sdesc']").val(),
@@ -180,6 +254,9 @@ function viewData(){
         		$("input[name='sname']").val(msg[i].sname);
         		$("input[name='sno']").val(msg[i].sno);
     	    	$("input[name='sclass']").val(msg[i].sclass);
+    	    	$("#sclass").val(msg[i].sclass);
+    	    	$("select[name='sclass']").val(msg[i].sclass);
+    	    	$("select[name='scollege']").val(msg[i].scollege);
     	    	$("input[name='scollege']").val(msg[i].scollege);
     	    	$("input[name='scontact']").val(msg[i].scontact);
     	    	$("input[name='semail']").val(msg[i].semail);

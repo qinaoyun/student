@@ -1,21 +1,35 @@
 package cn.jit.edu.controller.front;
 
-import java.io.*;
-import java.security.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import javax.servlet.http.*;
-
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import cn.jit.edu.dao.*;
-import cn.jit.edu.entity.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import cn.jit.edu.dao.EntityDao;
+import cn.jit.edu.entity.Collegeinfo;
+import cn.jit.edu.entity.TaskComplete;
+import cn.jit.edu.entity.TaskNotice;
+import cn.jit.edu.entity.User;
+import cn.jit.edu.entity.WorkNotice;
+import cn.jit.edu.entity.WorkSubmit;
 import cn.jit.edu.util.LogonUtils;
 import cn.jit.edu.util.MD5Util;
 
@@ -30,37 +44,17 @@ public class UserController {
 	public String testLogin(@RequestParam(value = "number") String number,String password, HttpServletRequest request,HttpServletResponse response, ModelMap model)
 			throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		boolean flag = LogonUtils.checkNumber(request);
-		MessageDigest md = null;
-		byte[] encryContext = null;
-		StringBuffer buf = null;
-		List<Object> objlist1 = null;
-		List<Object> worklist = null;
-		List<Object> tasklist = null;
-		int i;		
+		List<Object> objlist1 = null;	
 		if (!flag) {
 			return "front/error";
 		}
-		md = MessageDigest.getInstance("MD5");
-		md.update(password.getBytes());
-		encryContext = md.digest();
-
-		buf = new StringBuffer("");
-		for (int offset = 0; offset < encryContext.length; offset++) {
-			i = encryContext[offset];
-			if (i < 0)
-				i += 256;
-			if (i < 16)
-				buf.append("0");
-			buf.append(Integer.toHexString(i));
-		}
-		// ---
-//		System.out.println(buf);
+	
 		
 		objlist1 = entityDao.createQuery("from user");
 		for (int j = 0; j < objlist1.size(); j++) {
 			User cus = (User) objlist1.get(j);
 			// System.out.println(cus.getPassword());
-			if (cus.getSno().equals(number) && buf.toString().equals(cus.getSpasswd())) {
+			if (cus.getSno().equals(number) && MD5Util.md5Encode(password).equals(cus.getSpasswd())) {
 				// context.getSession().put("user", number);
 				switch(Integer.parseInt(cus.getStatus())){
 					case 0:
@@ -100,19 +94,18 @@ public class UserController {
 	    }
 //   注册
 	@RequestMapping(value = "/register.do", method = RequestMethod.POST)
-	public String register(User user) throws Exception {
+	public String register(User user) throws NoSuchAlgorithmException{
 		String pwd = user.getSpasswd();
-		System.out.println(pwd);
-		System.out.println(user.getSname());
+//		System.out.println(user.getSname());
 		
 		String college=user.getScollege();
 		List<Object> collegename = entityDao.createQuery("from collegeinfo where ID='" + college + "'"); 
 		for(int a=0;a< collegename.size();a++){
 			Collegeinfo  mmsg=(Collegeinfo) collegename .get(a);
-			  user.setScollege(mmsg.getCollogeinfo());
+			  user.setScollege(mmsg.getCollegeinfo());
 		  }
 		user.setSpasswd(MD5Util.md5Encode(pwd));
-		System.out.println(MD5Util.md5Encode(pwd));
+		
 		user.setSmodifydate(new Date());
 		user.setSheadimg("/headimg/head_01.png");
 		user.setStatus(Integer.toString(0));
@@ -178,46 +171,13 @@ public class UserController {
 			
 			List<Object> userObject = null;
 			User cus = new User();
-			
-			int i;
-			MessageDigest md = null;
-			StringBuffer buf = null;
-			byte[] encryContext = null;
-			
-			
-			md = MessageDigest.getInstance("MD5");
-			md.update(oldPassword.getBytes());
-			encryContext = md.digest();
 
-			buf = new StringBuffer("");
-			for (int offset = 0; offset < encryContext.length; offset++) {
-				i = encryContext[offset];
-				if (i < 0)
-					i += 256;
-				if (i < 16)
-					buf.append("0");
-				buf.append(Integer.toHexString(i));
-			}
-			
 			userObject = entityDao.createQuery("from user where ID='"+user.getID()+"'");
 			cus = (User)userObject.get(0);
-			if(buf.toString().equals(cus.getSpasswd())){
+			if(MD5Util.md5Encode(oldPassword).equals(cus.getSpasswd())){
 //				System.out.println(newPassword);
-				
-				md = MessageDigest.getInstance("MD5");
-				md.update(newPassword.getBytes());
-				encryContext = md.digest();
 
-				buf = new StringBuffer("");
-				for (int offset = 0; offset < encryContext.length; offset++) {
-					i = encryContext[offset];
-					if (i < 0)
-						i += 256;
-					if (i < 16)
-						buf.append("0");
-					buf.append(Integer.toHexString(i));
-				}
-				entityDao.update("update user set spasswd='"+buf.toString()+"' where ID='"+user.getID()+"'");
+				entityDao.update("update user set spasswd='"+MD5Util.md5Encode(newPassword)+"' where ID='"+user.getID()+"'");
 
 				
 				out.print("success");

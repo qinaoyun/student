@@ -23,10 +23,16 @@
     <script src="<%=request.getContextPath()%>/module/js/jquery-2.1.0.min.js"></script>
     <script src="<%=request.getContextPath()%>/module/js/easyform/easyform.js"></script>
 <script type="text/javascript">
-       $(document).ready(function(){   	  
+       $(document).ready(function(){ 
     	   $("#scollege").val("--请选择学院--");
     	   $("#form2").form("clear");
        });
+//        function check(){
+//     		var passwd1=$("#psw1").val();
+//     		var passwd2=$("#psw2").val();
+//     		if(passwd1!=passwd2){
+//     			alert("两次输入的密码要一样");
+//     		}
 </script>
 </head>
 <body>
@@ -88,7 +94,7 @@
                     <td>学院</td>
                     <td><select name="scollege" id="scollege">
                     <c:forEach var="college"  items="${obj}">
-                                   <option value="${college.ID}" id="scollegeid">${college.collogeinfo}</option>
+                                   <option value="${college.ID}" id="scollegeid">${college.collegeinfo}</option>
 <!--                                     <input type="hidden" id="scollegeid" value="" />  -->
                      </c:forEach>
                     </select>
@@ -97,12 +103,6 @@
                  <tr>
                     <td>班级</td>
                     <td><select name="sclass"id="sclass">
-                    	<%-- 	<c:forEach var="class"  items="${obj1}"> --%>
-                                   <%-- <option  value="${class.classinfo}">${class.classinfo}</option> --%>
-                                  <!--  <option value="软件工程2班">软件工程2班</option> -->
-<!--                                    <option value="">软件工程3班</option> -->
-<!--                                    <option value="">软件工程4班</option> -->
-                            <%--        </c:forEach> --%>
                                </select></td>
                 </tr>
               <!--   <tr>
@@ -178,7 +178,7 @@
             </script>
 
             <div class="buttons" style="margin-top: 50px;">
-                <center><input value="注 册" type="submit" ></center>
+                <center><input value="注 册" type="submit" onclick="check()"></center>
                 <!-- <input value="我有账号，我要登录" type="button" style="margin-right:45px; margin-top:20px;"> -->
             </div>
 
